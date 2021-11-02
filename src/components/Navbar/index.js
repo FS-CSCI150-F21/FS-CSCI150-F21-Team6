@@ -13,7 +13,7 @@ const Navbar = () => {
     <>
       <Nav>
         <NavLink to='/'>
-          Knight Promodoro
+        Kingdom Promodoro
         </NavLink>
         <Bars />
         <NavMenu>
@@ -26,7 +26,7 @@ const Navbar = () => {
           <NavLink to='/contact-us' activeStyle>
             Item Shop
           </NavLink>
-          <NavLink to='/sign-up' activeStyle>
+          <NavLink to='/' activeStyle>
             Friends
           </NavLink>
           {/* Second Nav */}
