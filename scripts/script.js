@@ -1,7 +1,7 @@
-//const { MongoClient } = require('mongodb');
-require(['mongodb'], function(MongoClient) {
+const { MongoClient } = require('mongodb');
+/*require(['mongodb'], function(MongoClient) {
 
-})
+})*/
 
 async function main() {
 
@@ -12,7 +12,17 @@ async function main() {
   try {
     await client.connect();
 
-    //await listDatabases(client);
+    await listDatabases(client);
+
+    console.log("\n---\n");
+
+    await listCollections(client, "sample_airbnb");
+
+    console.log("\n---\n");
+
+    //await listNamesInCollection(client, "sample_airbnb", "listingsAndReviews");
+
+    //console.log("\n---\n");
 
     await createListing(client, {
       name: "Nice House",
@@ -20,6 +30,8 @@ async function main() {
       bedrooms: 3,
       bathrooms: 2
     });
+
+    //await deleteWithName(client, "sample_airbnb", "listingsAndReviews", "Nice House");
 
   } catch (e) {
     console.error(e);
@@ -35,10 +47,10 @@ async function displayListing(client, listingName) {
   const result = await client.db("sample_airbnb").collection("listingsAndReviews").findOne({ name: listingName });
 
   if (result) {
-    document.getElementById('demo').innerHTML = result;
+    //document.getElementById('demo').innerHTML = result;
     console.log(result);
   } else {
-    document.getElementById('demo').innerHTML = "Listing not found.";
+    //document.getElementById('demo').innerHTML = "Listing not found.";
     console.log("Listing not found.");
   }
 }
@@ -53,7 +65,34 @@ async function listDatabases(client) {
   const dbList = await client.db().admin().listDatabases();
 
   console.log("Databases:");
-  dbList.databases.forEach(db => {
+  await dbList.databases.forEach(db => {
     console.log(`- ${db.name}`);
   });
+}
+
+async function listCollections(client, name) {
+  const collList = await client.db(name).listCollections();
+
+  console.log("Database Collections:");
+  await collList.forEach(coll => {
+    console.log(`- ${coll.name}`);
+  })
+}
+
+async function listNamesInCollection(client, dbName, collName) {
+  const list = await client.db(dbName).collection(collName).find({});
+
+  console.log("Database Elements:");
+  await list.forEach(listing => {
+    console.log(`- ${listing.name}`);
+  });
+}
+
+async function deleteWithName(client, dbName, collName, entryName) {
+  const deleted = await client.db(dbName).collection(collName).deleteMany({name: entryName});
+
+  console.log("Elements Deleted: ", deleted);
+  /*await deleted.forEach(listing => {
+    console.log(`- ${listing.name}`);
+  });*/
 }
