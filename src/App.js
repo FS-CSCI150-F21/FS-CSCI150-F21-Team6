@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import AddPost from "./components/AddContact";
 import EditContact from "./components/EditContact";
 import Home from "./components/Home";
+import Friends from "./components/Home";
 import Navbar from "./components/Navbar";
 import "./styles.css";
 
@@ -14,6 +15,7 @@ const App = () => {
       <Navbar />
       <Route exact path="/" component={() => <Home />} />
       <Route exact path="/add" component={() => <AddPost />} />
+      <Route path="/Friends" component={() => <Friends />} />
       <Route exact path="/edit/:id" component={() => <EditContact />} />
     </div>
   );

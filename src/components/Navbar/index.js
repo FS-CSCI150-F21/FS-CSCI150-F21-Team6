@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <Nav>
-        <NavLink to='/'>
+        <NavLink to='Home'>
         Kingdom Promodoro
         </NavLink>
         <Bars />
@@ -26,7 +26,7 @@ const Navbar = () => {
           <NavLink to='/contact-us' activeStyle>
             Item Shop
           </NavLink>
-          <NavLink to='/' activeStyle>
+          <NavLink to='/Friends' activeStyle>
             Friends
           </NavLink>
           {/* Second Nav */}

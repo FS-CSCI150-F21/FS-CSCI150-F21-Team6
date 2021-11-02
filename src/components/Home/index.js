@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Home = ({ contacts, deleteContact }) => {
+const Friends = ({ contacts, deleteContact }) => {
   return (
     <div className="container">
       <div className="row d-flex flex-column">
@@ -68,4 +68,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);
