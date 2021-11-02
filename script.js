@@ -1,8 +1,31 @@
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://user:1234@cluster0.3jiow.mongodb.net/test_database?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+
+async function main() {
+
+  const uri = "mongodb+srv://user:1234@cluster0.1uufx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    await listDatabases(client);
+
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await client.close();
+  }
+
+}
+
+main().catch(console.error);
+
+async function listDatabases(client) {
+  const dbList = await client.db().admin().listDatabases();
+
+  console.log("Databases:");
+  dbList.databases.forEach(db => {
+    console.log(`- ${db.name}`);
+  });
+}
