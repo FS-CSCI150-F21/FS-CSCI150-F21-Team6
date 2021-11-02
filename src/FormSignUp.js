@@ -2,7 +2,7 @@ import React from 'react';
 import validate from './VerifyInfo';
 import useForm from './useForm';
 import './Form.css';
-
+//Sign Up page
 const FormSignup = ({ submitForm }) => {
   const { handleChange, handleSubmit, values, errors } = useForm(
     submitForm,
