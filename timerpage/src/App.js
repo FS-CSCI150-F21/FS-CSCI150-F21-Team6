@@ -3,112 +3,114 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import './App.css';
-
+import axios from 'axios';
+import TimerDisplay from './components/Timer.js';
+import CharacterDisplay from './components/CharacterDisplay'
+import RoomDisplay from './components/RoomDisplay'
 const convMinSec = minuteValue => minuteValue * 60;
-
-const handleRoomComplete = (pomoscompleted) => {
-    if (pomoscompleted % 2 == 0){
-
-    }
-}
-
 
 function App() {
     // these are values that the user can adjust to change the length of their pomos and breaks
-  const [ pomodoroLength , updatepomodoroLength ] = useState(25)
-  const [ shortBreakLength , updateShortBreakLength ] = useState(5)
-  const [ longBreakLength , updateLongBreakLength ] = useState(20)
+  const [ pomodoroLength , setpomodoroLength ] = useState(25)
+  const [ shortBreakLength , setShortBreakLength ] = useState(5)
+  const [ longBreakLength , setLongBreakLength ] = useState(20)
     // this is what we compare to our pomolength to get our percent and keep track of how long we've been timed
-  const [ timerSeconds , updateTimerSeconds ] = useState(convMinSec(pomodoroLength))
-  const [ timerMode , updateTimerMode ] = useState('Studying')
-  const [ dungeonPercent, updateDP ] = useState(0)
-  const [ isRunning, updateIsRunning ] = useState(false)
+  const [ timerSeconds , setTimerSeconds ] = useState(convMinSec(pomodoroLength))
+  const [ timerMode , setTimerMode ] = useState('Studying')
+  const [ isRunning, setIsRunning ] = useState(false)
   const [ pomosCompleted, incrementPomos ] = useState(0);
-  // total experience gold and items earned
-    const [totalGold, updateTotalGold] = useState(0);
-    const [totalExperience, updateTotalExperience] = useState(0);
-  //  const normalise = (value) => ((value - MIN) * 100) / (MAX - MIN);
+  const multiplier = pomosCompleted - .5;
+  const [character, setCharacterState] = useState({name: "", level: 0, gold: 0})
+
+    const {name, level, gold} = character;
+
     const normalise = (value) => ((value - 0) * 100) / (convMinSec(pomodoroLength) - 0);
 
     const handleModeChange = () => {
       if (timerMode === 'Studying' && pomosCompleted === 3){
-          updateTimerMode('LongBreak');
+          setTimerMode('LongBreak');
           incrementPomos(pomosCompleted => pomosCompleted + 1);
-          updateTimerSeconds(convMinSec(longBreakLength));
+          setTimerSeconds(convMinSec(longBreakLength));
       }
       else if (timerMode === 'Studying'){
-          updateTimerMode('Short Break');
-          updateTimerSeconds(convMinSec(shortBreakLength));
+          setTimerMode('Short Break');
+          setTimerSeconds(convMinSec(shortBreakLength));
           incrementPomos(pomosCompleted => pomosCompleted + 1);
       } else{
-          updateTimerMode('Studying')
-          updateTimerSeconds(convMinSec(pomodoroLength));
+          setTimerMode('Studying')
+          setTimerSeconds(convMinSec(pomodoroLength));
       }
+    }
+
+    const handleRoomComplete = (pomoscompleted) => {
+        if (pomoscompleted % 2 == 0){
+            return 'cock'
+        }
     }
 
     const formatSeconds = (timerSeconds) => {
         return `${Math.floor(timerSeconds/60)}:${(timerSeconds % 60 > 9) ? timerSeconds % 60 : '0' + timerSeconds % 60}`;
     }
 
-    // this only handles the countdown and is irrelevant to the type of countdown its doing
+    useEffect(() =>{
+        axios.get('http://localhost:3001/data')
+            .then(
+                response => {
+                    setCharacterState({name: response.data.name, level: response.data.level, gold: response.data.gold})
+                }
+            )
+    },[])
+
     const timeoutID = 0;
     useEffect(() => {
         if(isRunning && timerSeconds > 0) {
-            console.log('still running', Math.abs(timerSeconds - convMinSec(pomodoroLength)))
-            console.log('check math', pomodoroLength - timerSeconds)
             const timeoutID = setTimeout(() => {
-                updateTimerSeconds(timerSeconds => timerSeconds - 1)
+                setTimerSeconds(timerSeconds => timerSeconds - 1)
             }, 1000)
         }
 
         if (timerSeconds === 0){
-            updateIsRunning(false);
+            setIsRunning(false);
             clearTimeout(timeoutID);
             handleModeChange()
+            // is it better to have a separate handleRoomComplete function to isolate
+            handleRoomComplete()
         }
 
         clearTimeout(timeoutID);
     }, [isRunning, timerSeconds]);
 
   return (
-
           <Box sx={{
               display: 'flex',
               justifyContent: 'center',
               textAlign: 'center',
-             // background: 'pink',
+              alignItems: 'baseline',
               pt: 5, pb: 5,
-
           }}>
-
-              <Box sx={{border: 'solid 1px black', pl: 5, pr: 5, mr: 5, width: '9%'}}>
-                  <p>Rooms Cleared: {pomosCompleted}</p>
+              <Box sx={{mr: 10, width: '9%'}}>
+                  <RoomDisplay pomosCompleted={pomosCompleted} multiplier={multiplier}></RoomDisplay>
               </Box>
 
+              <Box>
+                  <Box sx={{mb: 5, minWidth: 400}}>
+                      <LinearProgress variant="determinate" value={normalise(Math.abs(timerSeconds - convMinSec(pomodoroLength)))} sx={{height: 12, width: '100%'}}></LinearProgress>
+                      <TimerDisplay timerMode={timerMode} timer={formatSeconds(timerSeconds)} reward={pomosCompleted % 2 === 0 ? 'Gold' : 'Exp'}></TimerDisplay>
+                  </Box>
 
-              <Box sx={{width: 500 }}>
-                  <h1>{timerMode} {formatSeconds(timerSeconds)}</h1>
-                  <LinearProgress variant="determinate" value={normalise(Math.abs(timerSeconds - convMinSec(pomodoroLength)))} sx={{height: 12, width: '100%'}}></LinearProgress>
-                 <h1>test</h1>
                   <ButtonGroup variant={'contained'}>
-                      <Button onClick={() => updateIsRunning(true)}>START</Button>
+                      <Button onClick={() => setIsRunning(true)}>START</Button>
                       <Button onClick={() => {
-                          updateIsRunning(false)
+                          setIsRunning(false)
                           clearTimeout(timeoutID)
                       }}>STOP</Button>
                   </ButtonGroup>
               </Box>
 
-              <Box sx={{border: 'solid 1px black', pl: 5, pr: 5, ml: 5, width: '9%'}}>
-                  <p>character name: </p>
-                  <p>level:</p>
-                  <p>gold: </p>
+              <Box sx={{ml: 10, width: '9%'}}>
+                <CharacterDisplay name={name} level={level} gold={gold} ></CharacterDisplay>
               </Box>
-
           </Box>
-
-
   );
 }
 
