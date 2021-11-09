@@ -27,7 +27,6 @@ export default class AirbnbsDAO {
                 query = { $text: { $search: filters["name"] } }
             } else if ("bedrooms" in filters) {
                 query = { "bedrooms": { $eq: parseInt(filters["bedrooms"]) } }
-                //console.log("Queried\n")
             }
         }
 
