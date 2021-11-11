@@ -7,7 +7,7 @@ router
     .route("/")
     .get(UsersCtrl.apiGetUsers)
     .post(UsersCtrl.apiAddUser)
-    //.put(UsersCtrl.apiUpdateUser)
+    .put(UsersCtrl.apiUpdateUser)
     //.delete(UsersCtrl.apiDeleteUser)
 
 export default router

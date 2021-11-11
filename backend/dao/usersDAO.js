@@ -87,4 +87,31 @@ export default class UsersDAO {
             return { error: e }
         }
     }
+
+    static async updateUser(userId, userInfo) {
+        try {
+            let updateResponse
+            if(userInfo.user_name && userInfo.password) {
+                updateResponse = await users.updateOne(
+                    { _id: ObjectId(userId) },
+                    { $set: { user_name: userInfo.user_name, password: userInfo.password } }
+                )
+            } else if (userInfo.user_name) {
+                updateResponse = await users.updateOne(
+                    { _id: ObjectId(userId) },
+                    { $set: { user_name: userInfo.user_name } }
+                )
+            } else if (userInfo.password) {
+                updateResponse = await users.updateOne(
+                    { _id: ObjectId(userId) },
+                    { $set: { password: userInfo.password } }
+                )
+            }
+
+            return updateResponse
+        } catch (e) {
+            console.error(`Unable to update user: ${e}`)
+            return { error: e }
+        }
+    }
 }

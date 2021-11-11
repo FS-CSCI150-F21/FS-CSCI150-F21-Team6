@@ -47,4 +47,37 @@ export default class UsersCtrl {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiUpdateUser(req, res, next) {
+        try {
+            const userId = req.body.id
+            let userInfo = {}
+            if(req.body.user_name) {
+                userInfo.user_name = req.body.user_name
+            }
+            if (req.body.password) {
+                userInfo.password = req.body.password
+            }
+
+            const userUpdateResponse = await UsersDAO.updateUser(
+                userId,
+                userInfo
+            )
+
+            var { error } = userUpdateResponse
+            if (error) {
+                res.status(400).json({ error })
+            }
+
+            if (userUpdateResponse.modifiedCount === 0) {
+                throw new Error(
+                    "unable to update user - id may be incorrect"
+                )
+            }
+
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }
