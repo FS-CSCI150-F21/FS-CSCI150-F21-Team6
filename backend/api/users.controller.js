@@ -6,8 +6,8 @@ export default class UsersCtrl {
         const page = req.query.page ? parseInt(req.query.page, 10) : 0
 
         let filters = {}
-        if (req.query.user_name) {
-            filters.user_name = req.query.user_name
+        if (req.query.userName) {
+            filters.user_name = req.query.userName
         } else if (req.query.id) {
             filters.id = req.query.id
         }
