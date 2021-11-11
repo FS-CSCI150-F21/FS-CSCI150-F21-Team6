@@ -8,6 +8,8 @@ export default class UsersCtrl {
         let filters = {}
         if (req.query.user_name) {
             filters.user_name = req.query.user_name
+        } else if (req.query.id) {
+            filters.id = req.query.id
         }
 
         const { usersList, totalNumUsers } = await UsersDAO.getUsers({
@@ -24,5 +26,25 @@ export default class UsersCtrl {
             total_results: totalNumUsers,
         }
         res.json(response)
+    }
+
+    static async apiAddUser(req, res, next) {
+        try{
+            const userName = req.body.user_name
+            const password = req.body.password
+            const charName = req.body.char_name
+            const date = new Date()
+
+            const AddUserResponse = await UsersDAO.addUser(
+                userName,
+                password,
+                charName,
+                date
+            )
+
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
     }
 }

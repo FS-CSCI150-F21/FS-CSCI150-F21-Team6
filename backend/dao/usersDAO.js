@@ -1,4 +1,6 @@
 import { ReturnDocument } from "mongodb"
+import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectId
 
 let users
 
@@ -25,6 +27,8 @@ export default class UsersDAO {
         if (filters) {
             if ("user_name" in filters) {
                 query = { $text: { $search: filters["user_name"] } }
+            } else if ("id" in filters) {
+                query = { "_id": ObjectId(filters["id"]) }
             }
         }
 
@@ -47,6 +51,40 @@ export default class UsersDAO {
         } catch (e) {
             console.error(`Unable to convert cursor to array or problem counting documents, ${e}`)
             return { usersList: [], totalNumUsers: 0 }
+        }
+    }
+
+    static async addUser(userName, password, charName, date) {
+        try {
+            const userDoc = {
+                user_name: userName,
+                password: password,
+                friends_list: {
+                    num_friends: 0,
+                    friends: [],
+                    pending: []
+                },
+                character: {
+                    char_name: charName,
+                    stats: {
+                        level: 1,
+                        xp_to_next_level: 100,
+                        max_hp: 10,
+                        current_hp: 10,
+                        stength: 5,
+                        defense: 5,
+                        gold: 0
+                    },
+                    achievements: [],
+                    inventory: []
+                },
+                date_created: date
+            }
+
+            return await users.insertOne(userDoc)
+        } catch (e) {
+            console.error(`Unable to add user: ${e}`)
+            return { error: e }
         }
     }
 }
