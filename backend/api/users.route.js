@@ -8,6 +8,6 @@ router
     .get(UsersCtrl.apiGetUsers)
     .post(UsersCtrl.apiAddUser)
     .put(UsersCtrl.apiUpdateUser)
-    //.delete(UsersCtrl.apiDeleteUser)
+    .delete(UsersCtrl.apiDeleteUser)
 
 export default router

@@ -80,4 +80,16 @@ export default class UsersCtrl {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiDeleteUser(req, res, next) {
+        try {
+            const userId = req.body.id
+            const userDeleteResponse = await UsersDAO.deleteUser (
+                userId
+            )
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

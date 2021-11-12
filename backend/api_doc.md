@@ -11,4 +11,8 @@ In the body of the request, include `user_name`, `password`, and `char_name`.
 
 ### Update User
 Accessable via **PUT** request to `/api/v1/users/`<br>
-In the body of the request include `id` to identify the user to modify, as well as `user_name` and/or `password`. One or both may be updated in a single request.
+In the body of the request, include `id` to identify the user to modify, as well as `user_name` and/or `password`. One or both may be updated in a single request.
+
+### Delete User
+Accessable via **DELETE** request to `/api/va/users/`<br>
+In the body of the request, include `id` to identify the user.

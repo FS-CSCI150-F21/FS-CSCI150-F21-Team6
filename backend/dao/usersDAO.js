@@ -114,4 +114,17 @@ export default class UsersDAO {
             return { error: e }
         }
     }
+
+    static async deleteUser(userId) {
+        try {
+            const deleteResponse = await users.deleteOne({
+                _id: ObjectId(userId)
+            })
+
+            return deleteResponse
+        } catch (e) {
+            console.error(`Unable to delete user: ${e}`)
+            return { error: e }
+        }
+    }
 }
