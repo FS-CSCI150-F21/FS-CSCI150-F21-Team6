@@ -71,7 +71,7 @@ export default class UsersDAO {
                         xp_to_next_level: 100,
                         max_hp: 10,
                         current_hp: 10,
-                        stength: 5,
+                        strength: 5,
                         defense: 5,
                         gold: 0
                     },

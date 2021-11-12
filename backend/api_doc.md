@@ -14,5 +14,15 @@ Accessable via **PUT** request to `/api/v1/users/`<br>
 In the body of the request, include `id` to identify the user to modify, as well as `user_name` and/or `password`. One or both may be updated in a single request.
 
 ### Delete User
-Accessable via **DELETE** request to `/api/va/users/`<br>
+Accessable via **DELETE** request to `/api/v1/users/`<br>
 In the body of the request, include `id` to identify the user.
+
+## Character
+### Get Character
+Accessable via **GET** request to `/api/v1/users/character/`<br>
+To show the character of a specific user, query by `userId` to identify the user.
+
+### Update Character
+Accessable via **PUT** request to `/api/v1/users/character/`<br>
+In the body of the request, include `user_id` to identify the user.<br>
+Include any of the following fields to update the corresponding field in the user's character: `char_name`, `level`, `xp_to_next_level`, `max_hp`, `current_hp`, `strength`, `defense`, and/or `gold`.
