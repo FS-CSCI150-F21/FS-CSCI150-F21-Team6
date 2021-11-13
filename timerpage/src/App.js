@@ -3,6 +3,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import TimerDisplay from './components/Timer.js';
 import CharacterDisplay from './components/CharacterDisplay'
@@ -11,13 +13,14 @@ const convMinSec = minuteValue => minuteValue * 60;
 
 function App() {
     // these are values that the user can adjust to change the length of their pomos and breaks
-  const [ pomodoroLength , setpomodoroLength ] = useState(25)
+  const [ pomodoroLength , setpomodoroLength ] = useState(.05)
   const [ shortBreakLength , setShortBreakLength ] = useState(5)
   const [ longBreakLength , setLongBreakLength ] = useState(20)
     // this is what we compare to our pomolength to get our percent and keep track of how long we've been timed
   const [ timerSeconds , setTimerSeconds ] = useState(convMinSec(pomodoroLength))
   const [ timerMode , setTimerMode ] = useState('Studying')
   const [ isRunning, setIsRunning ] = useState(false)
+  const [ open, setOpen ] = useState(false)
   const [ pomosCompleted, incrementPomos ] = useState(0);
   const multiplier = pomosCompleted - .5;
   const [character, setCharacterState] = useState({name: "", level: 0, gold: 0})
@@ -44,7 +47,8 @@ function App() {
 
     const handleRoomComplete = (pomoscompleted) => {
         if (pomoscompleted % 2 == 0){
-            return 'cock'
+            setOpen(true)
+            console.log('room complete % 2 ran')
         }
     }
 
@@ -59,6 +63,9 @@ function App() {
                     setCharacterState({name: response.data.name, level: response.data.level, gold: response.data.gold})
                 }
             )
+            .catch(error => {
+                console.log(error)
+            })
     },[])
 
     const timeoutID = 0;
@@ -73,14 +80,14 @@ function App() {
             setIsRunning(false);
             clearTimeout(timeoutID);
             handleModeChange()
-            // is it better to have a separate handleRoomComplete function to isolate
-            handleRoomComplete()
+            handleRoomComplete(pomosCompleted)
         }
 
         clearTimeout(timeoutID);
     }, [isRunning, timerSeconds]);
 
   return (
+      <>
           <Box sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -88,6 +95,15 @@ function App() {
               alignItems: 'baseline',
               pt: 5, pb: 5,
           }}>
+
+              <Snackbar
+                  anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                  open={open}
+                  autoHideDuration={2000}
+                  handleClose={() => setOpen(false)}
+                  message = {gold}
+              />
+
               <Box sx={{mr: 10, width: '9%'}}>
                   <RoomDisplay pomosCompleted={pomosCompleted} multiplier={multiplier}></RoomDisplay>
               </Box>
@@ -95,7 +111,7 @@ function App() {
               <Box>
                   <Box sx={{mb: 5, minWidth: 400}}>
                       <LinearProgress variant="determinate" value={normalise(Math.abs(timerSeconds - convMinSec(pomodoroLength)))} sx={{height: 12, width: '100%'}}></LinearProgress>
-                      <TimerDisplay timerMode={timerMode} timer={formatSeconds(timerSeconds)} reward={pomosCompleted % 2 === 0 ? 'Gold' : 'Exp'}></TimerDisplay>
+                      <TimerDisplay timerMode={timerMode} timer={formatSeconds(timerSeconds)} reward={pomosCompleted % 2 === 0 ? '`Gold`' : 'Exp'}></TimerDisplay>
                   </Box>
 
                   <ButtonGroup variant={'contained'}>
@@ -111,6 +127,7 @@ function App() {
                 <CharacterDisplay name={name} level={level} gold={gold} ></CharacterDisplay>
               </Box>
           </Box>
+          </>
   );
 }
 
