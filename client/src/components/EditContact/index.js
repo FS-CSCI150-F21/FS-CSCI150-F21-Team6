@@ -91,7 +91,7 @@ const EditContact = ({ contacts, updateContact }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contactInfo,
 });
 const mapDispatchToProps = (dispatch) => ({
   updateContact: (data) => {

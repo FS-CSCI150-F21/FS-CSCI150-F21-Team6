@@ -91,7 +91,7 @@ const AddPost = ({ contacts, addContact }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contactInfo,
 });
 const mapDispatchToProps = (dispatch) => ({
   addContact: (data) => {
