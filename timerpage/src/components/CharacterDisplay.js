@@ -3,18 +3,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-const CharacterDisplay = ({name, level, gold}) => {
+const CharacterDisplay = ({character}) => {
     return (
         <Box sx={{ml: 10, width: '9%'}}>
             <Card>
                 <CardContent>
                     <Typography variant="p">
-                        {name}
+                        {character.name}
                     </Typography>
                     <Typography style={{wordWrap: "break-word"}}>
-                        🆙 {level}
+                        {character.level}
                         <br></br>
-                        💰 {gold}
+                        {character.exp} / 300
+                        <br></br>
+                        {character.gold}
                     </Typography>
                     <Typography>
                     </Typography>

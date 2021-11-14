@@ -7,8 +7,11 @@ const TimerDisplay = ({timerMode, timer, reward}) => {
     return (
         <Card>
             <CardContent>
-                <Typography>
+                <Typography variant='h4'>
                     {timerMode}
+                </Typography>
+                <Typography>
+                    Active Task
                 </Typography>
                 <Typography variant='h2'>
                     {timer}

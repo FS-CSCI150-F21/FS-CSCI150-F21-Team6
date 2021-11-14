@@ -11,32 +11,29 @@ import TimeMath from './services/TimeMath';
 import Rewards from './services/Rewards';
 
 function App() {
-    // these are values that the user can adjust to change the length of their pomos and breaks
   const [ pomodoroLength , setpomodoroLength ] = useState(.05)
   const [ shortBreakLength , setShortBreakLength ] = useState(5)
   const [ longBreakLength , setLongBreakLength ] = useState(20)
-    // this is what we compare to our pomolength to get our percent and keep track of how long we've been timed
   const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoroLength))
-  const [ timerMode , setTimerMode ] = useState('Studying')
+  const [ timerMode , setTimerMode ] = useState('Questing')
   const [ isRunning, setIsRunning ] = useState(false)
   const [ open, setOpen ] = useState(false)
   const [ pomosCompleted, incrementPomos ] = useState(0);
   const multiplier = pomosCompleted - .5;
-  const [character, setCharacterState] = useState({name: "", level: 0, gold: 0})
-    const {name, level, gold} = character;
+  const [character, setCharacterState] = useState({name: "", level: 0, exp: 0, expReq: 0, gold: 0})
 
     const handleModeChange = () => {
-      if (timerMode === 'Studying' && pomosCompleted === 3){
-          setTimerMode('LongBreak');
+      if (timerMode === 'Questing' && pomosCompleted === 3){
+          setTimerMode('Long Camp');
           incrementPomos(pomosCompleted => pomosCompleted + 1);
           setTimerSeconds(TimeMath.convMinSec(longBreakLength));
       }
-      else if (timerMode === 'Studying'){
-          setTimerMode('Short Break');
+      else if (timerMode === 'Questing'){
+          setTimerMode('Short Camp');
           setTimerSeconds(TimeMath.convMinSec(shortBreakLength));
           incrementPomos(pomosCompleted => pomosCompleted + 1);
       } else{
-          setTimerMode('Studying')
+          setTimerMode('Questing')
           setTimerSeconds(TimeMath.convMinSec(pomodoroLength));
       }
     }
@@ -45,7 +42,10 @@ function App() {
         axios.get('http://localhost:3001/data')
             .then(
                 response => {
-                    setCharacterState({name: response.data.name, level: response.data.level, gold: response.data.gold})
+                    const character = response.data.character;
+                    console.log(character)
+                    // investigate destructuring for cleaner code
+                    setCharacterState({name: character.name, level: character.level, exp: character.exp, expReq: character.expReq, gold: character.gold})
                 }
             )
             .catch(error => {
@@ -64,7 +64,7 @@ function App() {
             setIsRunning(false);
             clearTimeout(timeoutID);
             handleModeChange()
-            Rewards.handleRoomComplete(pomosCompleted)
+            Rewards.handleRoomComplete(pomosCompleted, character, setCharacterState)
         }
         clearTimeout(timeoutID);
     }, [isRunning, timerSeconds]);
@@ -95,7 +95,7 @@ function App() {
                   </ButtonGroup>
               </Box>
 
-                <CharacterDisplay name={name} level={level} gold={gold} ></CharacterDisplay>
+                <CharacterDisplay character={character}></CharacterDisplay>
           </Box>
   );
 }
