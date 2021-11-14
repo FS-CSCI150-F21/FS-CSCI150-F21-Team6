@@ -59,7 +59,7 @@ const Friends = ({ contacts, deleteContact }) => {
 };
 
 const mapStateToProps = (state) => ({
-  contacts: state,
+  contacts: state.contactInfo,
 });
 
 const mapDispatchToProps = (dispatch) => ({
