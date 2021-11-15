@@ -14,20 +14,20 @@
         "inventory" : []
       },
       "quests" : [{
+        "id" : 1,
         "title": "Physics",
-        "isActive": false,
         "totalPomoDone": 2
       },
 
         {
+          "id" : 2,
           "title": "Computer Science",
-          "isActive": true,
           "totalPomoDone": 2
         },
 
         {
+          "id" : 3,
           "title": "Math",
-          "isActive": false,
           "totalPomoDone": 2
         }],
       "friends" : [123,345,4]
