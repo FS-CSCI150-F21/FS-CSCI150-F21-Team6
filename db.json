@@ -5,15 +5,15 @@
       "id": 1,
       "email": "JohnnyboyKCB@gmail.com",
       "character": {
-        "name" : "Chungus",
-        "level" : 0,
+        "name" : "Johnny Dean",
+        "level" : 1,
         "exp" : 0,
         "expReq": 200,
         "gold" : 0,
         "equippedItems" : [],
         "inventory" : []
       },
-      "quests" : [{
+      "tasks" : [{
         "id" : 1,
         "title": "Physics",
         "totalPomoDone": 2

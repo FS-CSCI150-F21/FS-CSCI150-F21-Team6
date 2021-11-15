@@ -13,7 +13,7 @@ import Rewards from './services/Rewards';
 
 function App() {
     // eventually use redux to handle state management across multiple components easier
-  const [ pomodoroLength , setpomodoroLength ] = useState(.05)
+  const [ pomodoroLength , setpomodoroLength ] = useState(25)
   const [ shortBreakLength , setShortBreakLength ] = useState(5)
   const [ longBreakLength , setLongBreakLength ] = useState(20)
   const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoroLength))
@@ -23,7 +23,7 @@ function App() {
   const [ pomosCompleted, incrementPomos ] = useState(0);
   const multiplier = pomosCompleted - .5;
   const [character, setCharacterState] = useState({name: "", level: 0, exp: 0, expReq: 0, gold: 0})
-  const [activeTask, setActivetask] = useState("Active Task")
+  const [activeTask, setActiveTask] = useState("")
 
     const handleRoomComplete = () => {
         incrementExp()
@@ -95,14 +95,13 @@ function App() {
 
               <Box>
                   <Box sx={{mb: 5, minWidth: 400}}>
-                      <LinearProgress variant="determinate" value={TimeMath.normalise(Math.abs(timerSeconds - TimeMath.convMinSec(pomodoroLength)),pomodoroLength)} sx={{height: 12, width: '100%'}}></LinearProgress>
-                      {/* break down into more components to reduce amount of props passed to timer display eventually */}
+                      <LinearProgress variant="determinate" value={TimeMath.normalise(Math.abs(timerSeconds - TimeMath.convMinSec(pomodoroLength)),pomodoroLength)} sx={{height: 12, width: '100%'}}/>
                       <TimerDisplay
                           timerMode={timerMode}
                           timer={TimeMath.formatSeconds(timerSeconds)}
                           reward={pomosCompleted % 2 === 0 ? '`Gold`' : 'Exp'}
                           activeTask = {activeTask}
-                      ></TimerDisplay>
+                      />
                   </Box>
                   <ButtonGroup variant={'contained'}>
                       <Button onClick={() => setIsRunning(true)}>START</Button>
@@ -111,7 +110,7 @@ function App() {
                           clearTimeout(timeoutID)
                       }}>STOP</Button>
                   </ButtonGroup>
-                <QuestDisplay />
+                <QuestDisplay setActiveTask={setActiveTask} />
               </Box>
                 <CharacterDisplay character={character} />
           </Box>
