@@ -14,7 +14,7 @@ const CharacterDisplay = ({character}) => {
                     <Typography style={{wordWrap: "break-word"}}>
                         {character.level}
                         <br></br>
-                        {character.exp} / 300
+                        {character.exp} / {character.expReq}
                         <br></br>
                         {character.gold}
                     </Typography>

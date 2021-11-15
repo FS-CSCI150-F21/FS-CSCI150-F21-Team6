@@ -1,9 +1,9 @@
-import React from 'react'
+import React,  { useState, useEffect } from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-const TimerDisplay = ({timerMode, timer, reward}) => {
+const TimerDisplay = ({timerMode, timer, reward, activeTask}) => {
     return (
         <Card>
             <CardContent>
@@ -11,7 +11,7 @@ const TimerDisplay = ({timerMode, timer, reward}) => {
                     {timerMode}
                 </Typography>
                 <Typography>
-                    Active Task
+                    {activeTask}
                 </Typography>
                 <Typography variant='h2'>
                     {timer}

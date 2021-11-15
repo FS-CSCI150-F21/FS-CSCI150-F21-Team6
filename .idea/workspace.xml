@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16bf6bfa-fc8e-4004-89f4-83de8ca81763" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/timerpage/src/components/QuestDisplay.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timerpage/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timerpage/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/services/Character.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timerpage/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timerpage/src/components/CharacterDisplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/components/CharacterDisplay.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timerpage/src/components/Timer.js" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/components/Timer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timerpage/src/services/Character.js" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/services/Character.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timerpage/src/services/Rewards.js" beforeDir="false" afterPath="$PROJECT_DIR$/timerpage/src/services/Rewards.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +69,8 @@
       <workItem from="1635914982920" duration="553000" />
       <workItem from="1636059105523" duration="6405000" />
       <workItem from="1636319832294" duration="13899000" />
-      <workItem from="1636865340992" duration="5373000" />
+      <workItem from="1636865340992" duration="5471000" />
+      <workItem from="1636933294999" duration="7496000" />
     </task>
     <servers />
   </component>
