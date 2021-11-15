@@ -1,0 +1,37 @@
+{
+  "data":
+    [
+      {
+      "id": 1,
+      "email": "JohnnyboyKCB@gmail.com",
+      "character": {
+        "name" : "Chungus",
+        "level" : 0,
+        "exp" : 0,
+        "expReq": 200,
+        "gold" : 0,
+        "equippedItems" : [],
+        "inventory" : []
+      },
+      "quests" : [{
+        "title": "Physics",
+        "isActive": false,
+        "totalPomoDone": 2
+      },
+
+        {
+          "title": "Computer Science",
+          "isActive": true,
+          "totalPomoDone": 2
+        },
+
+        {
+          "title": "Math",
+          "isActive": false,
+          "totalPomoDone": 2
+        }],
+      "friends" : [123,345,4]
+    }
+    ]
+
+}

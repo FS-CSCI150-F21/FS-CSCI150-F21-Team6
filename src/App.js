@@ -77,7 +77,7 @@ function App() {
             setIsRunning(false);
             clearTimeout(timeoutID);
             handleModeChange()
-            handleRoomComplete()
+            // handleRoomComplete()
         }
         clearTimeout(timeoutID);
     }, [isRunning, timerSeconds]);
@@ -91,7 +91,7 @@ function App() {
               pt: 5, pb: 5,
           }}>
 
-              <RoomDisplay pomosCompleted={pomosCompleted} multiplier={multiplier}></RoomDisplay>
+              <RoomDisplay pomosCompleted={pomosCompleted} multiplier={multiplier} />
 
               <Box>
                   <Box sx={{mb: 5, minWidth: 400}}>
@@ -104,7 +104,6 @@ function App() {
                           activeTask = {activeTask}
                       ></TimerDisplay>
                   </Box>
-
                   <ButtonGroup variant={'contained'}>
                       <Button onClick={() => setIsRunning(true)}>START</Button>
                       <Button onClick={() => {
@@ -112,12 +111,9 @@ function App() {
                           clearTimeout(timeoutID)
                       }}>STOP</Button>
                   </ButtonGroup>
-
-                <QuestDisplay></QuestDisplay>
-
+                <QuestDisplay />
               </Box>
-
-                <CharacterDisplay character={character}></CharacterDisplay>
+                <CharacterDisplay character={character} />
           </Box>
   );
 }
