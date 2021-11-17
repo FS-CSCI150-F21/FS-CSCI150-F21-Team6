@@ -1,4 +1,3 @@
-import { ReturnDocument } from "mongodb"
 import mongodb from "mongodb"
 const ObjectId = mongodb.ObjectId
 
@@ -61,8 +60,7 @@ export default class UsersDAO {
                 password: password,
                 friends_list: {
                     num_friends: 0,
-                    friends: [],
-                    pending: []
+                    friends: []
                 },
                 character: {
                     char_name: charName,
@@ -73,9 +71,9 @@ export default class UsersDAO {
                         current_hp: 10,
                         gold: 0
                     },
-                    tasks: [],
                     inventory: []
                 },
+                tasks: [],
                 date_created: date
             }
 
