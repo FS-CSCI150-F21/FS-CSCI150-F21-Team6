@@ -71,11 +71,9 @@ export default class UsersDAO {
                         xp_to_next_level: 100,
                         max_hp: 10,
                         current_hp: 10,
-                        strength: 5,
-                        defense: 5,
                         gold: 0
                     },
-                    achievements: [],
+                    tasks: [],
                     inventory: []
                 },
                 date_created: date
