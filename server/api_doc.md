@@ -43,7 +43,7 @@ The response back to the client will consist of only the `character` object belo
 ### Update Character
 Accessable via **PUT** request to `/api/v1/users/character/`<br>
 In the body of the request, include `user_id` to identify the user.<br>
-Include any of the following fields to update the corresponding field in the user's character: `char_name`, `level`, `xp_to_next_level`, `max_hp`, `current_hp`, `strength`, `defense`, and/or `gold`.
+Include any of the following fields to update the corresponding field in the user's character: `char_name`, `level`, `xp_to_next_level`, `max_hp`, `current_hp`, and/or `gold`.
 The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
 
 ## Friends
@@ -57,6 +57,12 @@ The response will include a single friend in the `friend` field.
 ### Add Friend
 Accessable via **POST** request to `/api/v1/users/friends/`<br>
 In the body of the request, include `user_id` and `friend_id`.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+### Update Friend
+Accessable via **PUT** request to `/api/v1/users/friends/`<br>
+In the body of the request, include `user_id` and `friend_id`.<br>
+This will update the target user's entry for the target friend to their currect profile info.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
 ### Delete Friend

@@ -53,12 +53,6 @@ export default class CharacterDAO {
                 if(characterInfo.current_hp) {
                     tempChar.stats.current_hp = characterInfo.current_hp
                 }
-                if(characterInfo.strength) {
-                    tempChar.stats.strength = characterInfo.strength
-                }
-                if(characterInfo.defense) {
-                    tempChar.stats.defense = characterInfo.defense
-                }
                 if(characterInfo.gold) {
                     tempChar.stats.gold = characterInfo.gold
                 }

@@ -28,12 +28,6 @@ export default class CharacterCtrl {
             if(req.body.current_hp) {
                 characterInfo.current_hp = req.body.current_hp
             }
-            if(req.body.strength) {
-                characterInfo.strength = req.body.strength
-            }
-            if(req.body.defense) {
-                characterInfo.defense = req.body.defense
-            }
             if(req.body.gold) {
                 characterInfo.gold = req.body.gold
             }

@@ -90,7 +90,7 @@ export default class FriendsCtrl {
 
             const newFriendsList = user.friends_list
 
-            const response = await FriendsDAO.addFriend(userId, newFriendsList)
+            const response = await FriendsDAO.updateUsersFriends(userId, newFriendsList)
 
             res.json({ status: "success", response })
         } catch (e) {
@@ -98,38 +98,52 @@ export default class FriendsCtrl {
         }
     }
 
-    /*static async apiUpdateFriend(req, res, next) {
-        try {
-            const userId = req.body.id
-            let userInfo = {}
-            if(req.body.user_name) {
-                userInfo.user_name = req.body.user_name
-            }
-            if (req.body.password) {
-                userInfo.password = req.body.password
-            }
-
-            const userUpdateResponse = await UsersDAO.updateUser(
-                userId,
-                userInfo
-            )
-
-            var { error } = userUpdateResponse
-            if (error) {
-                res.status(400).json({ error })
+    static async apiUpdateFriend(req, res, next) {
+        try{
+            let userId
+            let friendId
+            if(req.body.user_id && req.body.friend_id) {
+                userId = req.body.user_id
+                friendId = req.body.friend_id
+                if (userId == friendId)
+                {
+                    res.status(400).json("Cannot have a user friend themself (user_id should not equal friend_id).")
+                    return
+                }
+            } else {
+                res.status(400).json("Please include user_id and friend_id in the body of the request.")
+                return
             }
 
-            if (userUpdateResponse.modifiedCount === 0) {
-                throw new Error(
-                    "unable to update user - id may be incorrect"
-                )
+            const userResult = await FriendsDAO.getFriends(userId)
+            const friendResult = await FriendsDAO.getFriends(friendId)
+
+            let user = userResult.user[0]
+            let friend = friendResult.user[0]
+            let friendsList = user.friends_list.friends
+            let newFriendInfo = {}
+            newFriendInfo._id = friend._id
+            newFriendInfo.user_name = friend.user_name
+            newFriendInfo.character = friend.character
+
+            for (var i = 0; i < friendsList.length; i++)
+            {
+                if(friendsList[i]._id == friendId)
+                {
+                    user.friends_list.friends[i] = newFriendInfo
+                    break
+                }
             }
 
-            res.json({ status: "success" })
+            const newFriendsList = user.friends_list
+
+            const response = await FriendsDAO.updateUsersFriends(userId, newFriendsList)
+
+            res.json({ status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
-    }*/
+    }
 
     static async apiDeleteFriend(req, res, next) {
         try{
@@ -173,7 +187,7 @@ export default class FriendsCtrl {
 
             const newFriendsList = user.friends_list
 
-            const response = await FriendsDAO.deleteFriend(userId, newFriendsList)
+            const response = await FriendsDAO.updateUsersFriends(userId, newFriendsList)
 
             res.json({ status: "success", response })
         } catch (e) {

@@ -21,7 +21,7 @@ router
     .route("/friends/")
     .get(FriendsCtrl.apiGetFriends)
     .post(FriendsCtrl.apiAddFriend)
-    //.put(FriendsCtrl.apiUpdateFriend)
+    .put(FriendsCtrl.apiUpdateFriend)
     .delete(FriendsCtrl.apiDeleteFriend)
 
 export default router
