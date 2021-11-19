@@ -2,7 +2,7 @@
 
 The parameters of a request can either be through a query or in the body of the request.<br><br>
 
-If the parameters are by query, then the parameters are added on to theend of the URL extension. After the URL extension, the following syntax should be used: `?<paramter>=<entry>`. This can also be followed by an `&` symbol and another `<parameter>=<entry>` to add on another query. Example of a URL extension containing a query: `/api/v1/users?usersPerPage=10&page=1`<br><br>
+If the parameters are by query, then the parameters are added on to theend of the URL extension. After the URL extension, the following syntax should be used: `?<paramter>=<entry>`. This can also be followed by an `&` symbol and another `<parameter>=<entry>` to add on another query. Example of a URL extension containing a query: `/api/v1/users?usersPerPage=10&page=1`.<br><br>
 
 If the parameters are in the body of the request, they must be included in the json object passed through in the request.<br>
 
@@ -51,7 +51,7 @@ The response back to the client will include a `status` field which contains the
 Accessable via **GET** request to `/api/v1/users/friends/`<br>
 To show the friends list of a given user, query by `userId` to identify the user.<br>
 The response will include an array of friends in the `friends` field as well as a total number of friends in the `num_friends` field.<br>
-To search for a specific friend in the friends list, also quesry by `friendId`.<br>
+To search for a specific friend in the friends list, also query by `friendId`.<br>
 The response will include a single friend in the `friend` field.
 
 ### Add Friend
@@ -68,4 +68,28 @@ If the request is successful, the response should include a `status` field showi
 ### Delete Friend
 Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
 In the body of the request, include `user_id` and `friend_id`.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+## Tasks
+### Get Tasks
+Accessable via **GET** request to `/api/v1/users/tasks/`<br>
+To show the tasks list of a given user, query by `userId` to identify the user.<br>
+The response will include an array of tasks in the `tasks` field as well as a total number of tasks in the `num_tasks` field.<br>
+To search for a specific task in the tasks list, also query by `taskId` or `taskName`.<br>
+The response will include a single task in the `task` field.
+
+### Add Task
+Accessable via **POST** request to `/api/v1/users/tasks/`<br>
+In the body of the request, include `user_id` and `task_name`.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+### Update Task
+Accessable via **PUT** request to `/api/v1/users/tasks/`<br>
+In the body of the request, include `user_id`, either `task_id` or `old_task_name`, and `new_task_name`.<br>
+This will update the target user's name for the target task.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+### Delete Task
+Accessable via **DELETE** request to `/api/v1/users/tasks/`<br>
+In the body of the request, include `user_id` and either `task_id` or `task_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
