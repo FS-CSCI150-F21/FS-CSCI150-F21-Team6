@@ -9,6 +9,7 @@ import CharacterDisplay from './components/CharacterDisplay';
 import RoomDisplay from './components/RoomDisplay';
 import QuestDisplay from './components/QuestDisplay';
 import TimeMath from './services/TimeMath';
+import TimerAdjust from "./components/TimerAdjust";
 import Rewards from './services/Rewards';
 
 function App() {
@@ -112,7 +113,11 @@ function App() {
                   </ButtonGroup>
                 <QuestDisplay setActiveTask={setActiveTask} />
               </Box>
-                <CharacterDisplay character={character} />
+
+                  <CharacterDisplay character={character} />
+                  <TimerAdjust/>
+
+
           </Box>
   );
 }
