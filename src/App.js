@@ -10,6 +10,7 @@ import RoomDisplay from './components/RoomDisplay';
 import QuestDisplay from './components/QuestDisplay';
 import TimeMath from './services/TimeMath';
 import TimerAdjust from "./components/TimerAdjust";
+import FriendsList from "./components/FriendsList";
 import Rewards from './services/Rewards';
 
 function App() {
@@ -115,7 +116,11 @@ function App() {
               </Box>
 
                   <CharacterDisplay character={character} />
+              <Box>
                   <TimerAdjust/>
+                  <FriendsList/>
+              </Box>
+
 
 
           </Box>
