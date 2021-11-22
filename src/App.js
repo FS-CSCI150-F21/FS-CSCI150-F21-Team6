@@ -8,7 +8,7 @@ import TimerDisplay from './components/Timer.js';
 import CharacterDisplay from './components/CharacterDisplay';
 import RoomDisplay from './components/RoomDisplay';
 import QuestDisplay from './components/QuestDisplay';
-import TimeMath from './services/TimeMath';
+import TimeMath from "./services/TimeMath";
 // Menu
 import TimerAdjust from "./components/Menu/TimerAdjust";
 import FriendsList from "./components/Menu/FriendsList";
@@ -17,13 +17,14 @@ import ItemShop from "./components/Menu/ItemShop";
 
 function App() {
     // eventually use redux to handle state management across multiple components easier
-  const [ pomodoroLength , setpomodoroLength ] = useState(25)
+  const [ pomodoroLength , setPomodoroLength ] = useState(25)
   const [ shortBreakLength , setShortBreakLength ] = useState(5)
   const [ longBreakLength , setLongBreakLength ] = useState(20)
+    // handles the actual displaying of minutes/seconds on the timer
   const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoroLength))
+
   const [ timerMode , setTimerMode ] = useState('Questing')
   const [ isRunning, setIsRunning ] = useState(false)
-  const [ open, setOpen ] = useState(false)
   const [ pomosCompleted, incrementPomos ] = useState(0);
   const multiplier = pomosCompleted - .5;
   const [character, setCharacterState] = useState({name: "", level: 0, exp: 0, expReq: 0, gold: 0})
@@ -32,6 +33,7 @@ function App() {
     const handleRoomComplete = () => {
         incrementExp()
     }
+
     const incrementExp = () => {
       const url = 'http://localhost:3001/data/1';
       // in json server i cannot access the deeper level properties to update the experience points, would need to use the actual api for testing
@@ -41,6 +43,7 @@ function App() {
             setCharacterState(res.data.character)
         })
     }
+
     const handleModeChange = () => {
       if (timerMode === 'Questing' && pomosCompleted === 3){
           setTimerMode('Long Camp');
@@ -56,6 +59,7 @@ function App() {
           setTimerSeconds(TimeMath.convMinSec(pomodoroLength));
       }
     }
+
     useEffect(() =>{
         axios.get('http://localhost:3001/data')
             .then(
@@ -119,7 +123,7 @@ function App() {
 
                   <CharacterDisplay character={character} />
               <Box>
-                  <TimerAdjust/>
+                  <TimerAdjust pomodoroLength={pomodoroLength} setPomodoroLength={setPomodoroLength} setTimerSeconds={setTimerSeconds} />
                   <FriendsList/>
                   <ItemShop/>
               </Box>

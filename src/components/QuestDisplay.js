@@ -55,7 +55,6 @@ const QuestDisplay = ({setActiveTask}) => {
                 setQuests(res.data[0].tasks)
                 setActiveTask(res.data[0].tasks[selectedIndex - 1].title)
             })
-        console.log("get ran")
     }, [])
 
 
