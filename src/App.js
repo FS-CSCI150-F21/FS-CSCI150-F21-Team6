@@ -9,9 +9,11 @@ import CharacterDisplay from './components/CharacterDisplay';
 import RoomDisplay from './components/RoomDisplay';
 import QuestDisplay from './components/QuestDisplay';
 import TimeMath from './services/TimeMath';
-import TimerAdjust from "./components/TimerAdjust";
-import FriendsList from "./components/FriendsList";
-import Rewards from './services/Rewards';
+// Menu
+import TimerAdjust from "./components/Menu/TimerAdjust";
+import FriendsList from "./components/Menu/FriendsList";
+import ItemShop from "./components/Menu/ItemShop";
+
 
 function App() {
     // eventually use redux to handle state management across multiple components easier
@@ -119,6 +121,7 @@ function App() {
               <Box>
                   <TimerAdjust/>
                   <FriendsList/>
+                  <ItemShop/>
               </Box>
 
 

@@ -3,30 +3,28 @@ import IconButton from '@mui/material/IconButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
-import SettingsIcon from '@mui/icons-material/Settings';
+import StoreIcon from '@mui/icons-material/Store';
 import Typography from "@mui/material/Typography";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
-const AdjustModal = ({open, handleClose}) => {
+const ItemShopModal = ({open, handleClose}) => {
     return (
 
-            <Dialog open={open}>
-
-
-                <ClickAwayListener onClickAway={handleClose}>
+        <Dialog open={open}>
+            <ClickAwayListener onClickAway={handleClose}>
                 <Box sx={{p: 5}}>
-                    <DialogTitle sx={{textAlign: "center", mb: 5}}> Adjust Timer Settings</DialogTitle>
+                    <DialogTitle sx={{textAlign: "center", mb: 5}}>Item Shop</DialogTitle>
                     <Typography>
                         Didn't want to have to do it didnt want to hae to
                     </Typography>
                 </Box>
-                </ClickAwayListener>
-            </Dialog>
+            </ClickAwayListener>
+        </Dialog>
 
     )
 }
 
-const TimerAdjust = () => {
+const ItemShop = () => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -38,16 +36,16 @@ const TimerAdjust = () => {
         setOpen(false)
     }
 
-return(
-    <Box>
-        <IconButton onClick={handleClickOpen}>
-            <SettingsIcon/>
-        </IconButton>
-        <AdjustModal open={open} handleClose={handleClose} />
+    return(
+        <Box>
+            <IconButton onClick={handleClickOpen}>
+                <StoreIcon />
+            </IconButton>
+            <ItemShopModal open={open} handleClose={handleClose} />
 
-    </Box>
+        </Box>
 
-)
+    )
 }
 
-export default TimerAdjust
+export default ItemShop
