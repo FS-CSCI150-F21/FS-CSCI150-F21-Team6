@@ -11,6 +11,7 @@ import Friends from "./components/Home/Home";
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
+import ProfilePage from './components/ProfilePage/ProfilePage'
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -23,6 +24,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={() => <Redirect to="/posts" />} />
           <Route path="/posts" exact component={Home} />
+          <Route exact path="/ProfilePage" component={() => <ProfilePage />} />
           <Route exact path="/" component={() => <Home />} />
           <Route exact path="/add" component={() => <AddPost />} />
           <Route path="/Friends" component={() => <Friends />} />
