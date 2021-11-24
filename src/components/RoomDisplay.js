@@ -8,8 +8,10 @@ const RoomDisplay = ({pomosCompleted, multiplier}) => {
         <Box sx={{mr: 10, width: '9%'}}>
         <Card>
             <CardContent>
+                <Typography variant="h6" sx={{mb: 1}}>
+                    Rooms
+                </Typography>
                 <Typography variant="p">
-                    Rooms:<br/>
                     Complete: {pomosCompleted}
                     <br/>
                     Multiplier: {pomosCompleted === 0 ? 1 : 1 + (multiplier)}

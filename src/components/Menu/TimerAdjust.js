@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
@@ -30,9 +30,9 @@ const AdjustGroup = ({title, handleAddClick, handleSubClick, newLength, setNewLe
 }
 
 // for now this breaks the progress bar which i have to fix
-const TimerAdjust = ({pomodoroLength , setPomodoroLength, shortBreak, setShortBreak, longBreak, setLongBreak, setTimerSeconds}) => {
+const TimerAdjust = ({pomodoro , setPomodoro, shortBreak, setShortBreak, longBreak, setLongBreak, setTimerSeconds}) => {
     const [open, setOpen] = useState(false);
-    const [newPomodoroLength, setNewPomodoroLength] = useState(pomodoroLength);
+    const [newPomodoroLength, setNewPomodoroLength] = useState(pomodoro);
     const [newShortBreakLength, setNewShortBreakLength] = useState(shortBreak);
     const [newLongBreakLength, setNewLongBreakLength] = useState(longBreak);
 
@@ -41,13 +41,13 @@ const TimerAdjust = ({pomodoroLength , setPomodoroLength, shortBreak, setShortBr
     }
     const handleClose = () => {
         setOpen(false)
-        setPomodoroLength(newPomodoroLength)
+        setPomodoro(newPomodoroLength)
         setShortBreak(newShortBreakLength)
         setLongBreak(newLongBreakLength)
         // future use probably find a way to find the currently active timer so it doesnt recent the timer if the user were to update it while they are on a break or something
         setTimerSeconds(TimeMath.convMinSec(newPomodoroLength));
     }
-    // setTimerSeconds(TimeMath.convMinSec(pomodoroLength));
+    // setTimerSeconds(TimeMath.convMinSec(pomodoro));
     const handleAddClick = (menuMinute, setMenuMinute) => {
         setMenuMinute(menuMinute + 1)
     }

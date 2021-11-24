@@ -2,27 +2,27 @@ import React from 'react'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+
 const CharacterDisplay = ({character}) => {
     return (
-
             <Card>
-                <CardContent>
+                <CardContent sx={{display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center"}}>
+                    <Avatar sx={{mb: 2}}/>
                     <Typography variant="p">
                         {character.name}
                     </Typography>
                     <Typography style={{wordWrap: "break-word"}}>
                         {character.level}
-                        <br></br>
+                        <br/>
                         {character.exp} / {character.expReq}
-                        <br></br>
+                        <br/>
                         {character.gold}
                     </Typography>
                     <Typography>
                     </Typography>
                 </CardContent>
             </Card>
-
     )
 }
 

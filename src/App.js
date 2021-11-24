@@ -16,49 +16,33 @@ import ItemShop from "./components/Menu/ItemShop";
 
 
 function App() {
-    // eventually use redux to handle state management across multiple components easier
-
-    //refactor names of the length because we dont need length and it makes the code look ugly as fuck
-  const [ pomodoroLength , setPomodoroLength ] = useState(25)
-  const [ shortBreakLength , setShortBreakLength ] = useState(5)
-  const [ longBreakLength , setLongBreakLength ] = useState(20)
-    // handles the actual displaying of minutes/seconds on the timer
-  const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoroLength))
-
+  const [ pomodoro , setPomodoro ] = useState(25)
+  const [ shortBreak , setShortBreak ] = useState(5)
+  const [ longBreak , setLongBreak ] = useState(20)
+  const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoro))
   const [ timerMode , setTimerMode ] = useState('Questing')
   const [ isRunning, setIsRunning ] = useState(false)
-  const [ pomosCompleted, incrementPomos ] = useState(0);
-  const multiplier = pomosCompleted - .5;
+  const [ pomosCompleted, setPomosCompleted ] = useState(0);
   const [character, setCharacterState] = useState({name: "", level: 0, exp: 0, expReq: 0, gold: 0})
   const [activeTask, setActiveTask] = useState("")
 
     const handleRoomComplete = () => {
-        incrementExp()
-    }
 
-    const incrementExp = () => {
-      const url = 'http://localhost:3001/data/1';
-      // in json server i cannot access the deeper level properties to update the experience points, would need to use the actual api for testing
-      const updateChar = {...character, exp: 100}
-        axios.put(url, updateChar).then(res => {
-            console.log(res)
-            setCharacterState(res.data.character)
-        })
     }
 
     const handleModeChange = () => {
       if (timerMode === 'Questing' && pomosCompleted === 3){
           setTimerMode('Long Camp');
-          incrementPomos(pomosCompleted => pomosCompleted + 1);
-          setTimerSeconds(TimeMath.convMinSec(longBreakLength));
+          setPomosCompleted(pomosCompleted => pomosCompleted + 1);
+          setTimerSeconds(TimeMath.convMinSec(longBreak));
       }
       else if (timerMode === 'Questing'){
           setTimerMode('Short Camp');
-          setTimerSeconds(TimeMath.convMinSec(shortBreakLength));
-          incrementPomos(pomosCompleted => pomosCompleted + 1);
+          setTimerSeconds(TimeMath.convMinSec(shortBreak));
+          setPomosCompleted(pomosCompleted => pomosCompleted + 1);
       } else{
           setTimerMode('Questing')
-          setTimerSeconds(TimeMath.convMinSec(pomodoroLength));
+          setTimerSeconds(TimeMath.convMinSec(pomodoro));
       }
     }
 
@@ -67,7 +51,6 @@ function App() {
             .then(
                 response => {
                     const character = response.data[0].character;
-                    console.log(character)
                     // investigate destructuring for cleaner code
                     setCharacterState(character)
                 }
@@ -76,7 +59,9 @@ function App() {
                 console.log(error)
             })
     },[])
+
     const timeoutID = 0;
+
     useEffect(() => {
         if(isRunning && timerSeconds > 0) {
             const timeoutID = setTimeout(() => {
@@ -87,7 +72,6 @@ function App() {
             setIsRunning(false);
             clearTimeout(timeoutID);
             handleModeChange()
-            // handleRoomComplete()
         }
         clearTimeout(timeoutID);
     }, [isRunning, timerSeconds]);
@@ -101,11 +85,11 @@ function App() {
               pt: 5, pb: 5,
           }}>
 
-              <RoomDisplay pomosCompleted={pomosCompleted} multiplier={multiplier} />
+              <RoomDisplay pomosCompleted={pomosCompleted} multiplier={1} />
 
               <Box>
                   <Box sx={{mb: 5, minWidth: 400}}>
-                      <LinearProgress variant="determinate" value={TimeMath.normalise(Math.abs(timerSeconds - TimeMath.convMinSec(pomodoroLength)),pomodoroLength)} sx={{height: 12, width: '100%'}}/>
+                      <LinearProgress variant="determinate" value={TimeMath.normalise(Math.abs(timerSeconds - TimeMath.convMinSec(pomodoro)),pomodoro)} sx={{height: 12, width: '100%'}}/>
                       <TimerDisplay
                           timerMode={timerMode}
                           timer={TimeMath.formatSeconds(timerSeconds)}
@@ -124,8 +108,9 @@ function App() {
               </Box>
               <Box sx={{ml: 10, width: '9%', display: "flex", flexDirection: "column", alignItems: "center"}}>
                   <CharacterDisplay character={character} />
+                  {/* might be able to use a stack here instead (probably more preferred by mui standards) */}
                   <Box sx={{display: "flex"}}>
-                          <TimerAdjust pomodoroLength={pomodoroLength} setPomodoroLength={setPomodoroLength} shortBreak={shortBreakLength} setShortBreak={setShortBreakLength} longBreak={longBreakLength} setLongBreak={setLongBreakLength} setTimerSeconds={setTimerSeconds} />
+                          <TimerAdjust pomodoro={pomodoro} setPomodoro={setPomodoro} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} setTimerSeconds={setTimerSeconds} />
                           <FriendsList/>
                           <ItemShop/>
                   </Box>

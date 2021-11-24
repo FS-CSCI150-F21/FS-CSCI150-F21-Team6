@@ -4,7 +4,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import axios from 'axios';
 // implement custom themes with createtheme and theme provider eventually
 
@@ -43,10 +42,6 @@ const QuestDisplay = ({setActiveTask}) => {
     const handleClick = (id) => {
         setSelectedIndex(id)
         setActiveTask(quests[id - 1].title)
-    }
-
-    const handleAddClick = () => {
-        setQuests()
     }
 
     useEffect(() => {
