@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 const CharacterDisplay = ({character}) => {
     return (
-        <Box sx={{ml: 10, width: '9%'}}>
+
             <Card>
                 <CardContent>
                     <Typography variant="p">
@@ -22,7 +22,7 @@ const CharacterDisplay = ({character}) => {
                     </Typography>
                 </CardContent>
             </Card>
-        </Box>
+
     )
 }
 

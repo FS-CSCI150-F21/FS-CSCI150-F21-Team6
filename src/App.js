@@ -17,6 +17,8 @@ import ItemShop from "./components/Menu/ItemShop";
 
 function App() {
     // eventually use redux to handle state management across multiple components easier
+
+    //refactor names of the length because we dont need length and it makes the code look ugly as fuck
   const [ pomodoroLength , setPomodoroLength ] = useState(25)
   const [ shortBreakLength , setShortBreakLength ] = useState(5)
   const [ longBreakLength , setLongBreakLength ] = useState(20)
@@ -120,12 +122,13 @@ function App() {
                   </ButtonGroup>
                 <QuestDisplay setActiveTask={setActiveTask} />
               </Box>
-
+              <Box sx={{ml: 10, width: '9%', display: "flex", flexDirection: "column", alignItems: "center"}}>
                   <CharacterDisplay character={character} />
-              <Box>
-                  <TimerAdjust pomodoroLength={pomodoroLength} setPomodoroLength={setPomodoroLength} setTimerSeconds={setTimerSeconds} />
-                  <FriendsList/>
-                  <ItemShop/>
+                  <Box sx={{display: "flex"}}>
+                          <TimerAdjust pomodoroLength={pomodoroLength} setPomodoroLength={setPomodoroLength} shortBreak={shortBreakLength} setShortBreak={setShortBreakLength} longBreak={longBreakLength} setLongBreak={setLongBreakLength} setTimerSeconds={setTimerSeconds} />
+                          <FriendsList/>
+                          <ItemShop/>
+                  </Box>
               </Box>
 
 

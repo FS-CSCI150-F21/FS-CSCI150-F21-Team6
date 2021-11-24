@@ -9,9 +9,9 @@ const RoomDisplay = ({pomosCompleted, multiplier}) => {
         <Card>
             <CardContent>
                 <Typography variant="p">
-                    Rooms:<br></br>
+                    Rooms:<br/>
                     Complete: {pomosCompleted}
-                    <br></br>
+                    <br/>
                     Multiplier: {pomosCompleted === 0 ? 1 : 1 + (multiplier)}
                 </Typography>
             </CardContent>
