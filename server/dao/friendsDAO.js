@@ -41,6 +41,30 @@ export default class FriendsDAO {
         }
     }
 
+    static async getFriendsByUsername(userName) {
+        let query = { $text: { $search: userName } }
+
+        let cursor
+
+        try {
+            cursor = await users.find(query)
+        } catch (e) {
+            console.error(`Unable to issue find command, $(e)`)
+            return { user: [] }
+        }
+
+        const displayCursor = cursor.limit(1).skip(0)
+
+        try {
+            const user = await displayCursor.toArray()
+
+            return { user }
+        } catch (e) {
+            console.error(`Unable to convert cursor to array or problem counting documents, ${e}`)
+            return { user: [] }
+        }
+    }
+
     static async updateUsersFriends(userId, newFriendsList) {
         try {
             let updateResponse = await users.updateOne(
