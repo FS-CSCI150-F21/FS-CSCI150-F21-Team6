@@ -47,7 +47,7 @@ const Friends = ({ contacts, deleteContact }) => {
                 ))
               ) : (
                 <tr>
-                  <th>No contacts found</th>
+                  <th>Your Friends List</th>
                 </tr>
               )}
             </tbody>
