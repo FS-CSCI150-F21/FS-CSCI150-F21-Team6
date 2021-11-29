@@ -31,7 +31,7 @@ The response back to the client will include a `status` field which contains the
 
 ### Delete User
 Accessable via **DELETE** request to `/api/v1/users/`<br>
-In the body of the request, include `id` to identify the user.
+In the body of the request, include `id` to identify the user for deletion.
 The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
 
 ## Character
@@ -93,3 +93,25 @@ If the request is successful, the response should include a `status` field showi
 Accessable via **DELETE** request to `/api/v1/users/tasks/`<br>
 In the body of the request, include `user_id` and either `task_id` or `task_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+## Item Shop
+### Get Item(s)
+Accessable via **GET** request to `/api/v1/itemshop/`<br>
+To show list of items, query by `itemsPerPage` and/or `page` (default values are 20 and 0).<br>
+To filter to specific items, query by `name` or `type`.<br>
+The response back to the client will consist of a list of returned items in the `items` field as well as the fields `page`, `filters`, `entries_per_page`, and `total_results`.
+
+### Add Item
+Accessable via **POST** request to `/api/v1/itemshop/`<br>
+In the body of the request, include `name`, and `type`.
+The response back to the client will include the item's info sent in the field `result`.<br>
+
+### Update Item
+Accessable via **PUT** request to `/api/v1/itemshop/`<br>
+In the body of the request, include `id` to identify the item to modify, as well as `name` and/or `type`. One or both may be updated in a single request.<br>
+The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
+
+### Delete Item
+Accessable via **DELETE** request to `/api/v1/itemshop/`<br>
+In the body of the request, include `id` to identify the item for deletion.
+The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.

@@ -7,9 +7,7 @@ const secret = 'test';
 
 export default class UsersCtrl {
     static async apiGetUsers(req, res, next) {
-        const auth = req.body.auth ? parseInt(req.body.auth, 10) : 0
-
-        const usersPerPage = req.query.usersPerPage ? parseInt(req.query.usersPerPage, 10) : 20
+        const itemsPerPage = req.query.itemsPerPage ? parseInt(req.query.itemsPerPage, 10) : 20
         const page = req.query.page ? parseInt(req.query.page, 10) : 0
 
         let filters = {}
