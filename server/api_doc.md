@@ -94,6 +94,25 @@ Accessable via **DELETE** request to `/api/v1/users/tasks/`<br>
 In the body of the request, include `user_id` and either `task_id` or `task_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
+## Inventory
+### Get Inventory
+Accessable via **GET** request to `/api/v1/users/inventory/`<br>
+To show the inventory of a given user, query by `userId` to identify the user.<br>
+The response will include an array of items in the `items` field as well as a total number of items in the `num_items` field.<br>
+To search for a specific item in the inventory, also query by `name`.<br>
+The response will include a single item in the `item` field.
+
+### Add Item
+Accessable via **POST** request to `/api/v1/users/inventory/`<br>
+In the body of the request, include `user_id` and `item_id`.<br>
+This will add the target item in the `itemshop` collection to the target user's inventory.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+### Delete Item
+Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
+In the body of the request, include `user_id` and `item_id`.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
 ## Item Shop
 ### Get Item(s)
 Accessable via **GET** request to `/api/v1/itemshop/`<br>
