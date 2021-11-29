@@ -1,4 +1,6 @@
 import FriendsDAO from "../dao/friendsDAO.js"
+import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectId
 
 export default class FriendsCtrl {
     static async apiGetFriends(req, res, next) {
@@ -18,11 +20,11 @@ export default class FriendsCtrl {
             let totalNumFriends = user.friends_list.num_friends
             let response
 
-            if (req.query.friendId) {
-                let friendId = req.query.friendId
+            if (req.query.friendUserName) {
+                let friendUserName = req.query.friendUserName
                 for (var i = 0; i < friendsList.length; i++)
                 {
-                    if(friendsList[i]._id == friendId)
+                    if(friendsList[i].user_name == friendUserName)
                     {
                         response = {
                             friend: friendsList[i]
@@ -46,31 +48,42 @@ export default class FriendsCtrl {
     static async apiAddFriend(req, res, next) {
         try{
             let userId
-            let friendId
-            if(req.body.user_id && req.body.friend_id) {
+            let friendUserName
+            if(req.body.user_id && req.body.friend_user_name) {
                 userId = req.body.user_id
-                friendId = req.body.friend_id
-                if (userId == friendId)
-                {
-                    res.status(400).json("Cannot have a user friend themself (user_id should not equal friend_id).")
-                    return
-                }
+                friendUserName = req.body.friend_user_name
             } else {
-                res.status(400).json("Please include user_id and friend_id in the body of the request.")
+                res.status(400).json("Please include user_id and friend_user_name in the body of the request.")
                 return
             }
 
             const userResult = await FriendsDAO.getFriends(userId)
-            const friendResult = await FriendsDAO.getFriends(friendId)
+            const friendResult = await FriendsDAO.getFriendsByUsername(friendUserName)
 
             let user = userResult.user[0]
+            if(!user)
+            {
+                res.status(400).json("Target user could not be found.")
+                return
+            }
             let friend = friendResult.user[0]
+            if(!friend)
+            {
+                res.status(400).json("Target friend could not be found.")
+                return
+            }
             let friendsList = user.friends_list.friends
             let friendExists = false
 
+            if (userId.toString() == friend._id.toString())
+            {
+                res.status(400).json("Cannot have a user friend themself.")
+                return
+            }
+
             for (var i = 0; i < friendsList.length; i++)
             {
-                if(friendsList[i]._id == friendId)
+                if(friendsList[i]._id.toString() == friend._id.toString())
                 {
                     friendExists = true
                 }
@@ -101,25 +114,30 @@ export default class FriendsCtrl {
     static async apiUpdateFriend(req, res, next) {
         try{
             let userId
-            let friendId
-            if(req.body.user_id && req.body.friend_id) {
+            let friendUserName
+            if(req.body.user_id && req.body.friend_user_name) {
                 userId = req.body.user_id
-                friendId = req.body.friend_id
-                if (userId == friendId)
-                {
-                    res.status(400).json("Cannot have a user friend themself (user_id should not equal friend_id).")
-                    return
-                }
+                friendUserName = req.body.friend_user_name
             } else {
-                res.status(400).json("Please include user_id and friend_id in the body of the request.")
+                res.status(400).json("Please include user_id and friend_user_name in the body of the request.")
                 return
             }
 
             const userResult = await FriendsDAO.getFriends(userId)
-            const friendResult = await FriendsDAO.getFriends(friendId)
+            const friendResult = await FriendsDAO.getFriendsByUsername(friendUserName)
 
             let user = userResult.user[0]
+            if(!user)
+            {
+                res.status(400).json("Target user could not be found.")
+                return
+            }
             let friend = friendResult.user[0]
+            if(!friend)
+            {
+                res.status(400).json("Target friend could not be found.")
+                return
+            }
             let friendsList = user.friends_list.friends
             let newFriendInfo = {}
             newFriendInfo._id = friend._id
@@ -128,7 +146,7 @@ export default class FriendsCtrl {
 
             for (var i = 0; i < friendsList.length; i++)
             {
-                if(friendsList[i]._id == friendId)
+                if(friendsList[i]._id.toString() == friend._id.toString())
                 {
                     user.friends_list.friends[i] = newFriendInfo
                     break
@@ -148,17 +166,12 @@ export default class FriendsCtrl {
     static async apiDeleteFriend(req, res, next) {
         try{
             let userId
-            let friendId
-            if(req.body.user_id && req.body.friend_id) {
+            let friendUserName
+            if(req.body.user_id && req.body.friend_user_name) {
                 userId = req.body.user_id
-                friendId = req.body.friend_id
-                if (userId == friendId)
-                {
-                    res.status(400).json("Cannot have a user friend themself (user_id should not equal friend_id).")
-                    return
-                }
+                friendUserName = req.body.friend_user_name
             } else {
-                res.status(400).json("Please include user_id and friend_id in the body of the request.")
+                res.status(400).json("Please include user_id and friend_user_name in the body of the request.")
                 return
             }
 
@@ -170,7 +183,7 @@ export default class FriendsCtrl {
             
             for (var i = 0; i < friendsList.length; i++)
             {
-                if(friendsList[i]._id == friendId)
+                if(friendsList[i].user_name == friendUserName)
                 {
                     friendsList.splice(i, 1)
                     friendExists = true

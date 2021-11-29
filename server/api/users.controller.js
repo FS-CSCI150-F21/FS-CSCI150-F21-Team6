@@ -9,47 +9,30 @@ export default class UsersCtrl {
     static async apiGetUsers(req, res, next) {
         const auth = req.body.auth ? parseInt(req.body.auth, 10) : 0
 
-        if (auth) {
+        const usersPerPage = req.query.usersPerPage ? parseInt(req.query.usersPerPage, 10) : 20
+        const page = req.query.page ? parseInt(req.query.page, 10) : 0
 
-            if(!req.body.user_name || !req.body.password) {
-                res.status(400).json({ message: "Please use username and password in the body of the request" })
-            }
-            let filters = {}
-            filters.user_name = req.body.user_name
-            const oldUser = (await UsersDAO.getUsers({filters})).usersList[0]
-            if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
-            const isPasswordCorrect = await bcrypt.compare(req.body.password, oldUser.password);
-            if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
-            const token = jwt.sign({ Username: oldUser.user_name, id: oldUser._id }, secret, { expiresIn: "1h" });
-            res.status(200).json({ result: oldUser, token }); 
-
-        } else {
-
-            const usersPerPage = req.query.usersPerPage ? parseInt(req.query.usersPerPage, 10) : 20
-            const page = req.query.page ? parseInt(req.query.page, 10) : 0
-
-            let filters = {}
-            if (req.query.userName) {
-                filters.user_name = req.query.userName
-            } else if (req.query.id) {
-                filters.id = req.query.id
-            }
-
-            const { usersList, totalNumUsers } = await UsersDAO.getUsers({
-                filters,
-                page,
-                usersPerPage,
-            })
-
-            let response = {
-                users: usersList,
-                page: page,
-                filters: filters,
-                entries_per_page: usersPerPage,
-                total_results: totalNumUsers,
-            }
-            res.json(response)
+        let filters = {}
+        if (req.query.userName) {
+            filters.user_name = req.query.userName
+        } else if (req.query.id) {
+            filters.id = req.query.id
         }
+
+        const { usersList, totalNumUsers } = await UsersDAO.getUsers({
+            filters,
+            page,
+            usersPerPage,
+        })
+
+        let response = {
+            users: usersList,
+            page: page,
+            filters: filters,
+            entries_per_page: usersPerPage,
+            total_results: totalNumUsers,
+        }
+        res.json(response)
     }
 
     static async apiAddUser(req, res, next) {
@@ -87,32 +70,51 @@ export default class UsersCtrl {
 
     static async apiUpdateUser(req, res, next) {
         try {
-            const userId = req.body.id
-            let userInfo = {}
-            if(req.body.user_name) {
-                userInfo.user_name = req.body.user_name
-            }
-            if (req.body.password) {
-                userInfo.password = req.body.password
-            }
+            const auth = req.body.auth ? parseInt(req.body.auth, 10) : 0
 
-            const userUpdateResponse = await UsersDAO.updateUser(
-                userId,
-                userInfo
-            )
+            if (auth) {
 
-            var { error } = userUpdateResponse
-            if (error) {
-                res.status(400).json({ error })
-            }
+                if(!req.body.user_name || !req.body.password) {
+                    res.status(400).json({ message: "Please use username and password in the body of the request" })
+                }
+                let filters = {}
+                filters.user_name = req.body.user_name
+                const oldUser = (await UsersDAO.getUsers({filters})).usersList[0]
+                if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
+                const isPasswordCorrect = await bcrypt.compare(req.body.password, oldUser.password);
+                if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
+                const token = jwt.sign({ Username: oldUser.user_name, id: oldUser._id }, secret, { expiresIn: "1h" });
+                res.status(200).json({ result: oldUser, token }); 
 
-            if (userUpdateResponse.modifiedCount === 0) {
-                throw new Error(
-                    "unable to update user - id may be incorrect"
+            } else {
+                
+                const userId = req.body.id
+                let userInfo = {}
+                if(req.body.user_name) {
+                    userInfo.user_name = req.body.user_name
+                }
+                if (req.body.password) {
+                    userInfo.password = req.body.password
+                }
+
+                const userUpdateResponse = await UsersDAO.updateUser(
+                    userId,
+                    userInfo
                 )
-            }
 
-            res.json({ status: "success" })
+                var { error } = userUpdateResponse
+                if (error) {
+                    res.status(400).json({ error })
+                }
+
+                if (userUpdateResponse.modifiedCount === 0) {
+                    throw new Error(
+                        "unable to update user - id may be incorrect"
+                    )
+                }
+
+                res.json({ status: "success" })
+            }
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

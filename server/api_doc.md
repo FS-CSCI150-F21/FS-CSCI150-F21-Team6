@@ -14,7 +14,7 @@ To access specific user, query by `userName` or `id`.<br>
 The response back to the client will consist of a list of returned users in the `users` field as well as the fields `page`, `filters`, `entries_per_page`, and `total_results`.
 
 ### Authenticate User
-Accessable via **GET** request to `/api/v1/users/`<br>
+Accessable via **PUT** request to `/api/v1/users/`<br>
 To authenticate a user, set `auth` to 1 in the body of the request. Include `user_name` and `password` in the body of the request as well to authenticate the user.<br>
 The response back to the client will include the user's info sent in the field `result` as well as the authentication token sent in the field `token`.
 
@@ -51,23 +51,23 @@ The response back to the client will include a `status` field which contains the
 Accessable via **GET** request to `/api/v1/users/friends/`<br>
 To show the friends list of a given user, query by `userId` to identify the user.<br>
 The response will include an array of friends in the `friends` field as well as a total number of friends in the `num_friends` field.<br>
-To search for a specific friend in the friends list, also query by `friendId`.<br>
+To search for a specific friend in the friends list, also query by `friendUserName`.<br>
 The response will include a single friend in the `friend` field.
 
 ### Add Friend
 Accessable via **POST** request to `/api/v1/users/friends/`<br>
-In the body of the request, include `user_id` and `friend_id`.<br>
+In the body of the request, include `user_id` and `friend_user_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
 ### Update Friend
 Accessable via **PUT** request to `/api/v1/users/friends/`<br>
-In the body of the request, include `user_id` and `friend_id`.<br>
+In the body of the request, include `user_id` and `friend_user_name`.<br>
 This will update the target user's entry for the target friend to their currect profile info.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
 ### Delete Friend
 Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
-In the body of the request, include `user_id` and `friend_id`.<br>
+In the body of the request, include `user_id` and `friend_user_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
 ## Tasks
