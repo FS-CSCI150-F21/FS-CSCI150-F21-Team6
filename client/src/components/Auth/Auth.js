@@ -11,7 +11,7 @@ import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
 
-const initialState = { firstName: '', lastName: '', user_name: '', password: '', confirmPassword: '' };
+const initialState = { firstName: '', lastName: '', Username: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
@@ -69,7 +69,7 @@ const SignUp = () => {
             <>
             </>
             )}
-            <Input name="user_name" label="Username" handleChange={handleChange} type="user_name" />
+            <Input name="Username" label="Username" handleChange={handleChange} type="Username" />
             <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
             { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
           </Grid>
@@ -77,7 +77,7 @@ const SignUp = () => {
             { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
-            clientId="564033717568-e5p23rhvcs4i6kffgsbci1d64r8hp6fn.apps.googleusercontent.com"
+            clientId="983020443437-vqjjk4mcro7d6vrm6pnth39hnooauogo.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In

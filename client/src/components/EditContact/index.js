@@ -17,21 +17,6 @@ const EditContact = ({ contacts, updateContact }) => {
   const [name, setName] = useState("");
 
   const handleSubmit = (e) => {
-    /*
-    e.preventDefault();
-    const checkContactLevelExists = contacts.filter((contact) =>
-      contact.Level === Level && contact.id !== currentContact.id
-        ? contact
-        : null
-    );
-    */
-   /*
-    const checkContactProgressExists = contacts.filter((contact) =>
-      contact.Progress === Progress && contact.id !== currentContact.id
-        ? contact
-        : null
-    );
-    */
 
     if (!name) {
       return toast.warning("Please fill in all fields!!");
