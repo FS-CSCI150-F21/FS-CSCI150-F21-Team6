@@ -122,12 +122,12 @@ The response back to the client will consist of a list of returned items in the 
 
 ### Add Item
 Accessable via **POST** request to `/api/v1/itemshop/`<br>
-In the body of the request, include `name`, and `type`.
+In the body of the request, include `name`, `type`, and `cost`.
 The response back to the client will include the item's info sent in the field `result`.<br>
 
 ### Update Item
 Accessable via **PUT** request to `/api/v1/itemshop/`<br>
-In the body of the request, include `id` to identify the item to modify, as well as `name` and/or `type`. One or both may be updated in a single request.<br>
+In the body of the request, include `id` to identify the item to modify, as well as `name`, `type`, and/or `cost`. One or both may be updated in a single request.<br>
 The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
 
 ### Delete Item
