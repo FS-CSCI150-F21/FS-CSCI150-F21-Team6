@@ -22,12 +22,13 @@ const App = () => {
       <ToastContainer />
         <Navbar />
         <Switch>
-          <Route path="/" exact component={() => <Redirect to="/posts" />} />
-          <Route path="/posts" exact component={() => < TimerPage/>} />
+          <Route path="/" exact component={() => <Redirect to="/Pomo" />} />
+          <Route path="/Pomo" exact component={() => < TimerPage/>} />
           <Route exact path="/add" component={() => <AddPost />} />
+          <Route path="/auth" exact component={() => <Auth/>} />
           <Route path="/Friends" component={() => <Friends />} />
           <Route exact path="/edit/:id" component={() => <EditContact />} />
-          <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
+          <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/Pomo" />)} />
         </Switch>
       </Container>
     </BrowserRouter>
