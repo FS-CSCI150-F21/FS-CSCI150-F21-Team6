@@ -11,7 +11,7 @@ import { AUTH } from '../../constants/actionTypes';
 import useStyles from './styles';
 import Input from './Input';
 
-const initialState = { firstName: '', lastName: '', Username: '', password: '', confirmPassword: '' };
+const initialState = { auth: 1, user_name: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
@@ -69,7 +69,7 @@ const SignUp = () => {
             <>
             </>
             )}
-            <Input name="Username" label="Username" handleChange={handleChange} type="Username" />
+            <Input name="user_name" label="Username" handleChange={handleChange} type="user_name" />
             <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
             { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
           </Grid>

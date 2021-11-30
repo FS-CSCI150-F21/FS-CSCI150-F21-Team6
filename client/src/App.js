@@ -4,13 +4,14 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import AddPost from "./components/AddContact";
 import EditContact from "./components/EditContact";
-//import Home from "./components/Home";
-import Friends from "./components/Home/Home";
+//import Friends from "./components/Friends";
+import Friends from "./components/Friends/Friends";
 //import "./styles.css";
 
 import Navbar from './components/Navbar/Navbar';
-import Home from './components/Home/Home';
+import Home from './components/Friends/Friends';
 import Auth from './components/Auth/Auth';
+import TimerPage from "./components/TimerPage/TimerPage";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -22,8 +23,7 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route path="/" exact component={() => <Redirect to="/posts" />} />
-          <Route path="/posts" exact component={Home} />
-          <Route exact path="/" component={() => <Home />} />
+          <Route path="/posts" exact component={() => < TimerPage/>} />
           <Route exact path="/add" component={() => <AddPost />} />
           <Route path="/Friends" component={() => <Friends />} />
           <Route exact path="/edit/:id" component={() => <EditContact />} />
