@@ -14,9 +14,7 @@ const CharacterDisplay = () => {
         axios.get(`http://localhost:5000/api/v1/users/character?userId=${userId}`)
             .then(
                 response => {
-                    console.log(response)
                     setCharacterState(response.data)
-                    console.log("in render", character)
                 }
             )
             .catch(error => {
@@ -30,9 +28,9 @@ const CharacterDisplay = () => {
                 <CardContent sx={{display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center"}}>
                     <Avatar sx={{mb: 2}}/>
                     <Typography variant="p">
-                        {character && character.char_name}
-                        {character && character.stats.level} <br />
-                        {character && character.stats.gold}
+                        {character && character.char_name} <br />
+                        Level: {character && character.stats.level} <br />
+                        Gold: {character && character.stats.gold}
                     </Typography>
 
                 </CardContent>

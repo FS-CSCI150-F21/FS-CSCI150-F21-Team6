@@ -6,6 +6,7 @@ export default class CharacterCtrl {
         const user = await CharacterDAO.getCharacter({
             userId
         })
+        console.log(user.character)
         res.json(user.character)
     }
 

@@ -8,21 +8,27 @@ import axios from 'axios';
 // implement custom themes with createtheme and theme provider eventually
 
 const NewTaskHandler = ({quests, setQuests}) => {
-    const [newQuest, setNewQuest] = useState()
+    const [newQuest, setNewQuest] = useState("")
+    const profile = JSON.parse(localStorage.getItem('profile'))
+    const userId = profile.result._id
 
     const handleQuestChange = (event) => {
         setNewQuest(event.target.value)
     }
 
     const handleQuestAdd = () => {
-// needs to be reworked for dealing with api but core functionality is there
-        const newQuestObj = {
-            id: 4,
-            title: newQuest,
-            totalPomoDone: 2
+        const insertedQuest = {
+            user_id: userId,
+            task_name: newQuest
         }
-        setQuests(quests.concat(newQuestObj))
-        setNewQuest('')
+        console.log(insertedQuest)
+        // wait for zack to implement feedback after a post request
+        axios.post(`http://localhost:5000/api/v1/users/tasks`, insertedQuest)
+            .then(res => {
+                setQuests(quests.concat(res.data))
+                setNewQuest('')
+                })
+            .catch(err => console.log(err))
     }
 
 return (
@@ -38,6 +44,8 @@ return (
 const QuestDisplay = ({setActiveTask}) => {
     const [quests, setQuests] = useState([])
     const [selectedIndex, setSelectedIndex] = useState(1)
+    const profile = JSON.parse(localStorage.getItem('profile'))
+    const userId = profile.result._id
 
     const handleClick = (id) => {
         setSelectedIndex(id)
@@ -45,20 +53,16 @@ const QuestDisplay = ({setActiveTask}) => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:3001/data')
+        axios.get(`http://localhost:5000/api/v1/users/tasks?userId=${userId}`)
             .then(res => {
-                setQuests(res.data[0].tasks)
-                setActiveTask(res.data[0].tasks[selectedIndex - 1].title)
+                setQuests(res.data.tasks)
             })
     }, [])
-
 
     return (
         <Box>
             <List sx={{maxHeight: 105, overflow: 'auto', mt: 5}}>
-                {
-                    quests.map(quest =>  <ListItemButton selected={selectedIndex === quest.id} onClick={() => {handleClick(quest.id)}}>{quest.title}</ListItemButton>)
-                }
+                {/*{quests.map(quest => <ListItemButton> {quest} </ListItemButton>)}*/}
             </List>
             <NewTaskHandler setQuests={setQuests} quests={quests}/>
         </Box>
