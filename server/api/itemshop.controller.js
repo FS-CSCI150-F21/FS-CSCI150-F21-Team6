@@ -41,11 +41,13 @@ export default class ItemShopCtrl {
             }
 
             const type = req.body.type
+            const cost = parseInt(req.body.cost, 10)
             const date = new Date()
 
             const result = await ItemShopDAO.addItem(
                 name,
                 type,
+                cost,
                 date
             )
 
@@ -65,6 +67,9 @@ export default class ItemShopCtrl {
             }
             if (req.body.type) {
                 itemInfo.type = req.body.type
+            }
+            if (req.body.cost) {
+                itemInfo.cost = parseInt(req.body.cost, 10)
             }
 
             const itemUpdateResponse = await ItemShopDAO.updateItem(

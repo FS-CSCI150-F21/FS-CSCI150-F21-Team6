@@ -3,6 +3,7 @@ import UsersCtrl from "./users.controller.js"
 import CharacterCtrl from "./character.controller.js"
 import FriendsCtrl from "./friends.controller.js"
 import TasksCtrl from "./tasks.controller.js"
+import InventoryCtrl from "./inventory.controller.js"
 
 const router = express.Router()
 
@@ -31,5 +32,11 @@ router
     .post(TasksCtrl.apiAddTask)
     .put(TasksCtrl.apiUpdateTask)
     .delete(TasksCtrl.apiDeleteTask)
+
+router
+    .route("/inventory/")
+    .get(InventoryCtrl.apiGetInventory)
+    .post(InventoryCtrl.apiAddItem)
+    .delete(InventoryCtrl.apiDeleteItem)
 
 export default router

@@ -44,6 +44,9 @@ export default class CharacterDAO {
                 if(characterInfo.level) {
                     tempChar.stats.level = characterInfo.level
                 }
+                if(characterInfo.current_xp) {
+                    tempChar.stats.current_xp = characterInfo.current_xp
+                }
                 if(characterInfo.xp_to_next_level) {
                     tempChar.stats.xp_to_next_level = characterInfo.xp_to_next_level
                 }

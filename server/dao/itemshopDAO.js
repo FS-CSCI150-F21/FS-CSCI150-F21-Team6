@@ -53,11 +53,12 @@ export default class ItemShopDAO {
         }
     }
 
-    static async addItem(name, type, date) {
+    static async addItem(name, type, cost, date) {
         try {
             const itemDoc = {
                 name,
                 type,
+                cost,
                 date
             }
 
@@ -73,20 +74,22 @@ export default class ItemShopDAO {
     static async updateItem(itemId, itemInfo) {
         try {
             let updateResponse
-            if(itemInfo.name && itemInfo.type) {
-                updateResponse = await items.updateOne(
-                    { _id: ObjectId(itemId) },
-                    { $set: { name: itemInfo.name, type: itemInfo.type } }
-                )
-            } else if (itemInfo.name) {
+            if (itemInfo.name) {
                 updateResponse = await items.updateOne(
                     { _id: ObjectId(itemId) },
                     { $set: { name: itemInfo.name } }
                 )
-            } else if (itemInfo.type) {
+            }
+            if (itemInfo.type) {
                 updateResponse = await items.updateOne(
                     { _id: ObjectId(itemId) },
                     { $set: { type: itemInfo.type } }
+                )
+            }
+            if (itemInfo.cost) {
+                updateResponse = await items.updateOne(
+                    { _id: ObjectId(itemId) },
+                    { $set: { cost: itemInfo.cost } }
                 )
             }
 

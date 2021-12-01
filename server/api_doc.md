@@ -94,6 +94,25 @@ Accessable via **DELETE** request to `/api/v1/users/tasks/`<br>
 In the body of the request, include `user_id` and either `task_id` or `task_name`.<br>
 If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
 
+## Inventory
+### Get Inventory
+Accessable via **GET** request to `/api/v1/users/inventory/`<br>
+To show the inventory of a given user, query by `userId` to identify the user.<br>
+The response will include an array of items in the `items` field as well as a total number of items in the `num_items` field.<br>
+To search for a specific item in the inventory, also query by `name`.<br>
+The response will include a single item in the `item` field.
+
+### Add Item
+Accessable via **POST** request to `/api/v1/users/inventory/`<br>
+In the body of the request, include `user_id` and `item_id`.<br>
+This will add the target item in the `itemshop` collection to the target user's inventory.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
+### Delete Item
+Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
+In the body of the request, include `user_id` and `item_id`.<br>
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+
 ## Item Shop
 ### Get Item(s)
 Accessable via **GET** request to `/api/v1/itemshop/`<br>
@@ -103,12 +122,12 @@ The response back to the client will consist of a list of returned items in the 
 
 ### Add Item
 Accessable via **POST** request to `/api/v1/itemshop/`<br>
-In the body of the request, include `name`, and `type`.
+In the body of the request, include `name`, `type`, and `cost`.
 The response back to the client will include the item's info sent in the field `result`.<br>
 
 ### Update Item
 Accessable via **PUT** request to `/api/v1/itemshop/`<br>
-In the body of the request, include `id` to identify the item to modify, as well as `name` and/or `type`. One or both may be updated in a single request.<br>
+In the body of the request, include `id` to identify the item to modify, as well as `name`, `type`, and/or `cost`. One or both may be updated in a single request.<br>
 The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
 
 ### Delete Item

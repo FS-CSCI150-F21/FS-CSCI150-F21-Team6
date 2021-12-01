@@ -3,6 +3,11 @@ import CharacterDAO from "../dao/characterDAO.js"
 export default class CharacterCtrl {
     static async apiGetCharacter(req, res, next) {
         const userId = req.query.userId
+        if(!userId)
+        {
+            res.status(400).json("Please enter userId in the query.");
+            return;
+        }
         const user = await CharacterDAO.getCharacter({
             userId
         })
@@ -19,6 +24,9 @@ export default class CharacterCtrl {
             }
             if(req.body.level) {
                 characterInfo.level = req.body.level
+            }
+            if(req.body.current_xp) {
+                characterInfo.current_xp = req.body.current_xp
             }
             if(req.body.xp_to_next_level) {
                 characterInfo.xp_to_next_level = req.body.xp_to_next_level
