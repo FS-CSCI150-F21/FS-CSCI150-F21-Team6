@@ -66,6 +66,7 @@ export default class UsersDAO {
                     char_name: charName,
                     stats: {
                         level: 1,
+                        current_xp: 0,
                         xp_to_next_level: 100,
                         max_hp: 10,
                         current_hp: 10,
