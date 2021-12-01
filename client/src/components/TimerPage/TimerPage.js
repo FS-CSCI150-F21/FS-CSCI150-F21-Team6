@@ -24,7 +24,6 @@ function TimerPage() {
   const [ timerMode , setTimerMode ] = useState('Questing')
   const [ isRunning, setIsRunning ] = useState(false)
   const [ pomosCompleted, setPomosCompleted ] = useState(0);
-  const [ character, setCharacterState ] = useState({name: '', level: 0, exp: 0, expReq: 0, gold: 0})
   const [ activeTask, setActiveTask ] = useState('')
 
     const handleModeChange = () => {
@@ -42,20 +41,6 @@ function TimerPage() {
           setTimerSeconds(TimeMath.convMinSec(pomodoro));
       }
     }
-
-    useEffect(() =>{
-        axios.get('http://localhost:3001/data')
-            .then(
-                response => {
-                    const character = response.data[0].character;
-                    // investigate destructuring for cleaner code
-                    setCharacterState(character)
-                }
-            )
-            .catch(error => {
-                console.log(error)
-            })
-    },[])
 
     const timeoutID = 0;
 
@@ -105,7 +90,7 @@ function TimerPage() {
               </Box>
 
               <Box sx={{ml: 10, width: '9%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <CharacterDisplay character={character} />
+                  <CharacterDisplay />
                   <Stack direction={'row'}>
                           <TimerAdjust pomodoro={pomodoro} setPomodoro={setPomodoro} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} setTimerSeconds={setTimerSeconds} />
                           <FriendsList/>

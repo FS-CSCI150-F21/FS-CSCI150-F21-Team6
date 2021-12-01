@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -8,70 +8,9 @@ import Typography from "@mui/material/Typography";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 // will hard code an array until i can see how zacks api will return the items (item.img, item.stats, item.cost)
 import Card from '@mui/material/Card';
+import Axios from "axios"
 
-const testArr = [
-    {
-        name: "Sword",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    },
-    {
-        name: "Staff",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    },
-    {
-        name: "Mace",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    },
-    {
-        name: "Sword",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    },
-    {
-        name: "Staff",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    },
-    {
-        name: "Mace",
-        itemStats: {
-            str: 1,
-            int: 2,
-            wis: 3
-        },
-        price: 123
-    }
-]
-
-const Item = ({itemName, itemStats, itemPrice, itemImg, isOwned}) => {
-
-    const handleBuyClick = () => {
-    //    api call here to update character and set status to bought
-
-    }
+const Item = ({itemName, itemStats, itemCost, isOwned}) => {
 
     if(isOwned){
         return (
@@ -79,9 +18,9 @@ const Item = ({itemName, itemStats, itemPrice, itemImg, isOwned}) => {
                 <Typography>
                     {itemName} <br />
                     {itemStats} <br />
-                    {itemPrice} <br />
+                    {itemCost} <br />
                 </Typography>
-                <Button onClick={handleBuyClick}>Owned</Button>
+                <Button onClick={() => {}}>Owned</Button>
             </Card>
         )
     } else {
@@ -90,7 +29,7 @@ const Item = ({itemName, itemStats, itemPrice, itemImg, isOwned}) => {
                 <Typography>
                     {itemName} <br />
                     {itemStats} <br />
-                    {itemPrice} <br />
+                    {itemCost} <br />
                 </Typography>
                 <Button>Buy</Button>
             </Card>
@@ -99,6 +38,7 @@ const Item = ({itemName, itemStats, itemPrice, itemImg, isOwned}) => {
 }
 
 const ItemShop = () => {
+    const [itemShop, setItemShop] = useState([])
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -109,6 +49,18 @@ const ItemShop = () => {
         setOpen(false)
     }
 
+
+    useEffect(() => {
+        Axios.get("http://localhost:5000/api/v1/itemshop/")
+            .then((res) => {
+                const itemList = (res.data.items)
+                setItemShop(itemList)
+            })
+            .catch(err => console.log(err))
+    }, [])
+
+
+
     return(
         <Box>
             <IconButton onClick={handleClickOpen}>
@@ -118,9 +70,7 @@ const ItemShop = () => {
             <Dialog open={open}>
                 <ClickAwayListener onClickAway={handleClose}>
                     <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center" ,p: 5}}>
-                    {/* <Item itemName={"Sword"} itemStats={"+Str"} /> */}
-                    {/*  here we need an api call to check if the item is in our inventory, if it is then we return the item with a red border, if it isn't return normally  */}
-                        {testArr.map(item => <Item itemName={item.name} itemStats={"+Str"} itemPrice={item.price} />)}
+                        {itemShop.map(item => <Item itemName={item.name} itemCost={item.cost} />)}
                     </Box>
                 </ClickAwayListener>
             </Dialog>
