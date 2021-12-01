@@ -105,7 +105,7 @@ export default class FriendsCtrl {
 
             const response = await FriendsDAO.updateUsersFriends(userId, newFriendsList)
 
-            res.json({ status: "success", response })
+            res.json({ friend: friendInfo, status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
@@ -157,7 +157,7 @@ export default class FriendsCtrl {
 
             const response = await FriendsDAO.updateUsersFriends(userId, newFriendsList)
 
-            res.json({ status: "success", response })
+            res.json({ friend: newFriendInfo, status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

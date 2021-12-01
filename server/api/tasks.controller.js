@@ -96,7 +96,7 @@ export default class TasksCtrl {
 
             const response = await TasksDAO.updateUsersTasks(userId, tasksList)
 
-            res.json({ status: "success", response })
+            res.json({ task: newTask, status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
@@ -132,6 +132,7 @@ export default class TasksCtrl {
             let user = userResult.user[0]
             let tasksList = user.tasks
             let taskExists = false
+            let task
 
             if (taskId) {
                 for (var i = 0; i < tasksList.length; i++)
@@ -144,6 +145,7 @@ export default class TasksCtrl {
                         }
                         tasksList[i].name = newTaskName
                         taskExists = true
+                        task = tasksList[i]
                         break
                     }
                 }
@@ -158,6 +160,7 @@ export default class TasksCtrl {
                         }
                         tasksList[i].name = newTaskName
                         taskExists = true
+                        task = tasksList[i]
                         break
                     }
                 }
@@ -170,7 +173,7 @@ export default class TasksCtrl {
 
             const response = await TasksDAO.updateUsersTasks(userId, tasksList)
 
-            res.json({ status: "success", response })
+            res.json({ task, status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

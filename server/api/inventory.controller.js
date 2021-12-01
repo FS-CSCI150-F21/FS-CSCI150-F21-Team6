@@ -95,7 +95,7 @@ export default class InventoryCtrl {
 
             const response = await InventoryDAO.updateUsersCharacter(userId, newCharacter)
 
-            res.json({ status: "success", response })
+            res.json({ item, status: "success", response })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

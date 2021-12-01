@@ -56,7 +56,7 @@ export default class CharacterCtrl {
                 )
             }
 
-            res.json({ status: "success" })
+            res.json({ character: characterInfo, status: "success" })
         } catch (e) {
             res.status(500).json( {error: e.message })
         }
