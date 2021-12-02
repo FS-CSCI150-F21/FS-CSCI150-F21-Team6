@@ -32,6 +32,12 @@ export default class ItemShopCtrl {
         try{
             const name = req.body.name
 
+            if(!name)
+            {
+                res.status(400).json("Please include name, type, and cost.")
+                return
+            }
+
             let filters = {}
             filters.name = name
             const oldItem = await ItemShopDAO.getItems({filters})
@@ -43,6 +49,12 @@ export default class ItemShopCtrl {
             const type = req.body.type
             const cost = parseInt(req.body.cost, 10)
             const date = new Date()
+
+            if(!type || !cost)
+            {
+                res.status(400).json("Please include name, type, and cost.")
+                return
+            }
 
             const result = await ItemShopDAO.addItem(
                 name,
@@ -88,7 +100,7 @@ export default class ItemShopCtrl {
                 )
             }
 
-            res.json({ status: "success" })
+            res.json({ item: itemUpdateResponse.itemList[0], status: "success" })
             
         } catch (e) {
             res.status(500).json({ error: e.message })

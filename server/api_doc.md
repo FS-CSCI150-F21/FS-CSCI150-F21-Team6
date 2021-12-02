@@ -44,7 +44,7 @@ The response back to the client will consist of only the `character` object belo
 Accessable via **PUT** request to `/api/v1/users/character/`<br>
 In the body of the request, include `user_id` to identify the user.<br>
 Include any of the following fields to update the corresponding field in the user's character: `char_name`, `level`, `xp_to_next_level`, `max_hp`, `current_hp`, and/or `gold`.
-The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
+The response back to the client will include a `status` field which contains the string "success" if the request was successful along with the updated characte info in the `character` field, otherwise the response will be an error message.
 
 ## Friends
 ### Get Friends
@@ -57,13 +57,13 @@ The response will include a single friend in the `friend` field.
 ### Add Friend
 Accessable via **POST** request to `/api/v1/users/friends/`<br>
 In the body of the request, include `user_id` and `friend_user_name`.<br>
-If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field and the newly added friend object in the `friend` field.
 
 ### Update Friend
 Accessable via **PUT** request to `/api/v1/users/friends/`<br>
 In the body of the request, include `user_id` and `friend_user_name`.<br>
 This will update the target user's entry for the target friend to their currect profile info.<br>
-If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field and the newly updated friend object in the `friend` field.
 
 ### Delete Friend
 Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
@@ -81,13 +81,13 @@ The response will include a single task in the `task` field.
 ### Add Task
 Accessable via **POST** request to `/api/v1/users/tasks/`<br>
 In the body of the request, include `user_id` and `task_name`.<br>
-If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field and the newly added task in the `task` field.
 
 ### Update Task
 Accessable via **PUT** request to `/api/v1/users/tasks/`<br>
 In the body of the request, include `user_id`, either `task_id` or `old_task_name`, and `new_task_name`.<br>
 This will update the target user's name for the target task.<br>
-If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field and the newly updated task in the `task` field.
 
 ### Delete Task
 Accessable via **DELETE** request to `/api/v1/users/tasks/`<br>
@@ -106,7 +106,7 @@ The response will include a single item in the `item` field.
 Accessable via **POST** request to `/api/v1/users/inventory/`<br>
 In the body of the request, include `user_id` and `item_id`.<br>
 This will add the target item in the `itemshop` collection to the target user's inventory.<br>
-If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field.
+If the request is successful, the response should include a `status` field showing "success", as well as the response from the MongoDB api in the `response` field and the newly added item in the `item` field.
 
 ### Delete Item
 Accessable via **DELETE** request to `/api/v1/users/friends/`<br>
@@ -128,7 +128,7 @@ The response back to the client will include the item's info sent in the field `
 ### Update Item
 Accessable via **PUT** request to `/api/v1/itemshop/`<br>
 In the body of the request, include `id` to identify the item to modify, as well as `name`, `type`, and/or `cost`. One or both may be updated in a single request.<br>
-The response back to the client will include a `status` field which contains the string "success" if the request was successful, otherwise the response will be an error message.
+The response back to the client will include a `status` field which contains the string "success" if the request was successful along with the updated item in the `item` field, otherwise the response will be an error message.
 
 ### Delete Item
 Accessable via **DELETE** request to `/api/v1/itemshop/`<br>

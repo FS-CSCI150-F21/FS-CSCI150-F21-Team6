@@ -63,8 +63,9 @@ export default class ItemShopDAO {
             }
 
             await items.insertOne(itemDoc)
+            const item = itemDoc
 
-            return itemDoc
+            return item
         } catch (e) {
             console.error(`Unable to add item: ${e}`)
             return { error: e }
@@ -92,8 +93,11 @@ export default class ItemShopDAO {
                     { $set: { cost: itemInfo.cost } }
                 )
             }
-
-            return updateResponse
+            
+            const cursor = await items.find({ "_id": ObjectId(itemId) })
+            //const displayCursor = cursor.limit(1).skip(0)
+            const itemList = await cursor.toArray()
+            return { itemList, updateResponse }
         } catch (e) {
             console.error(`Unable to update item: ${e}`)
             return { error: e }
