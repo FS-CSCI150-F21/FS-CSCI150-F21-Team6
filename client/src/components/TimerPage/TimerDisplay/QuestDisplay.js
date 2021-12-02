@@ -25,7 +25,8 @@ const NewTaskHandler = ({quests, setQuests}) => {
         // wait for zack to implement feedback after a post request
         axios.post(`http://localhost:5000/api/v1/users/tasks`, insertedQuest)
             .then(res => {
-                setQuests(quests.concat(res.data))
+                console.log(res)
+                setQuests(quests.concat(res.data.task))
                 setNewQuest('')
                 })
             .catch(err => console.log(err))
@@ -43,26 +44,30 @@ return (
 
 const QuestDisplay = ({setActiveTask}) => {
     const [quests, setQuests] = useState([])
-    const [selectedIndex, setSelectedIndex] = useState(1)
+    const [selectedIndex, setSelectedIndex] = useState(0)
     const profile = JSON.parse(localStorage.getItem('profile'))
     const userId = profile.result._id
 
-    const handleClick = (id) => {
-        setSelectedIndex(id)
-        setActiveTask(quests[id - 1].title)
+    const handleClick = (quest) => {
+        setSelectedIndex(quest._id)
+        setActiveTask(quest.name)
     }
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/v1/users/tasks?userId=${userId}`)
             .then(res => {
                 setQuests(res.data.tasks)
+                setSelectedIndex(res.data.tasks[0]._id)
+                setActiveTask(res.data.tasks[0].name)
             })
     }, [])
 
     return (
         <Box>
             <List sx={{maxHeight: 105, overflow: 'auto', mt: 5}}>
-                {/*{quests.map(quest => <ListItemButton> {quest} </ListItemButton>)}*/}
+                {quests.map(quest =>
+                    <ListItemButton selected={selectedIndex === quest._id} onClick={() => handleClick(quest)}> {quest.name} </ListItemButton>
+                )}
             </List>
             <NewTaskHandler setQuests={setQuests} quests={quests}/>
         </Box>
