@@ -21,11 +21,9 @@ const NewTaskHandler = ({quests, setQuests}) => {
             user_id: userId,
             task_name: newQuest
         }
-        console.log(insertedQuest)
         // wait for zack to implement feedback after a post request
         axios.post(`http://localhost:5000/api/v1/users/tasks`, insertedQuest)
             .then(res => {
-                console.log(res)
                 setQuests(quests.concat(res.data.task))
                 setNewQuest('')
                 })
@@ -56,9 +54,11 @@ const QuestDisplay = ({setActiveTask}) => {
     useEffect(() => {
         axios.get(`http://localhost:5000/api/v1/users/tasks?userId=${userId}`)
             .then(res => {
-                setQuests(res.data.tasks)
-                setSelectedIndex(res.data.tasks[0]._id)
-                setActiveTask(res.data.tasks[0].name)
+                if (res.data.tasks.length !== 0){
+                    setQuests(res.data.tasks)
+                    setSelectedIndex(res.data.tasks[0]._id)
+                    setActiveTask(res.data.tasks[0].name)
+                }
             })
     }, [])
 

@@ -17,32 +17,87 @@ import FriendsList from '../TimerPage/Menu/FriendsList'
 import ItemShop from '../TimerPage/Menu/ItemShop'
 
 function TimerPage() {
-  const [ pomodoro , setPomodoro ] = useState(25)
-  const [ shortBreak , setShortBreak ] = useState(5)
-  const [ longBreak , setLongBreak ] = useState(20)
-  const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoro))
-  const [ timerMode , setTimerMode ] = useState('Questing')
-  const [ isRunning, setIsRunning ] = useState(false)
-  const [ pomosCompleted, setPomosCompleted ] = useState(0);
-  const [ activeTask, setActiveTask ] = useState('')
+    const profile = JSON.parse(localStorage.getItem('profile'))
+    const userId = profile.result._id
+    const [ pomodoro , setPomodoro ] = useState(25)
+    const [ shortBreak , setShortBreak ] = useState(5)
+    const [ longBreak , setLongBreak ] = useState(20)
+    const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoro))
+    const [ timerMode , setTimerMode ] = useState('Questing')
+    const [ isRunning, setIsRunning ] = useState(false)
+    const [ pomosCompleted, setPomosCompleted ] = useState(0);
+    const [ activeTask, setActiveTask ] = useState('')
+    const [ character, setCharacterState ] = useState({char_name: "", stats: {}, inventory: []})
+    // Can probably refactor this into a smaller component, but for now it is easier to see how everything working
+    // Gold: Plus 20 gold per each finished study timer,
+    // plus 100 per each long break achieved
+    //
+    // XP: Plus 50 xp per each finished study timer,
+    // plus 200 for each long break achieved
+    //
+    const questComplete = (type) => {
+
+        let updatedXp = type === "LC" ? character.stats.current_xp + 100 : character.stats.current_xp + 50
+        const updatedGold = type === "LC" ? character.stats.gold + 100 : character.stats.gold + 50
+        let updatedLevel = character.stats.level
+        let updatedReqExp = character.stats.xp_to_next_level
+
+        if (updatedXp >= character.stats.xp_to_next_level) {
+            updatedXp = 0;
+            updatedLevel = updatedLevel + 1;
+            updatedReqExp = updatedReqExp + 100;
+        }
+
+        let updatedCharacter = {
+            user_id: userId,
+            current_xp: updatedXp,
+            gold: updatedGold,
+            level: updatedLevel,
+            xp_to_next_level: updatedReqExp
+        }
+
+        console.log(updatedXp)
+        setCharacterState({...character, stats: {...character.stats, gold: updatedGold, current_xp: updatedXp, level: updatedLevel, xp_to_next_level: updatedReqExp}})
+        // error when trying to post a 0 to updatedXP stat
+        axios.put(`http://localhost:5000/api/v1/users/character`, updatedCharacter)
+            .then(r => console.log(r))
+            .catch(e => console.log(e.response))
+    }
 
     const handleModeChange = () => {
       if (timerMode === 'Questing' && pomosCompleted === 3){
           setTimerMode('Long Camp');
           setPomosCompleted(pomosCompleted => pomosCompleted + 1);
           setTimerSeconds(TimeMath.convMinSec(longBreak));
+          questComplete("LC")
       }
       else if (timerMode === 'Questing'){
           setTimerMode('Short Camp');
           setTimerSeconds(TimeMath.convMinSec(shortBreak));
           setPomosCompleted(pomosCompleted => pomosCompleted + 1);
+          questComplete("Q")
       } else{
           setTimerMode('Questing')
           setTimerSeconds(TimeMath.convMinSec(pomodoro));
+
       }
     }
 
     const timeoutID = 0;
+
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/api/v1/users/character?userId=${userId}`)
+            .then(
+                response => {
+                    setCharacterState(response.data)
+                }
+            )
+            .catch(error => {
+                console.log(error)
+            })
+
+    }, [] )
 
     useEffect(() => {
         if(isRunning && timerSeconds > 0) {
@@ -90,7 +145,7 @@ function TimerPage() {
               </Box>
 
               <Box sx={{ml: 10, width: '9%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <CharacterDisplay />
+                  <CharacterDisplay character={character}/>
                   <Stack direction={'row'}>
                           <TimerAdjust pomodoro={pomodoro} setPomodoro={setPomodoro} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} setTimerSeconds={setTimerSeconds} />
                           <FriendsList/>
