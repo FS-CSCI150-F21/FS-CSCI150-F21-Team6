@@ -50,11 +50,11 @@ export default class CharacterCtrl {
                 res.status(400).json({ error })
             }
 
-            if (characterUpdateResponse.modifiedCount === 0) {
+            /*if (characterUpdateResponse.modifiedCount === 0) {
                 throw new Error(
                     "unable to update character - user id may be incorrect"
                 )
-            }
+            }*/
 
             res.json({ character: characterInfo, status: "success" })
         } catch (e) {
