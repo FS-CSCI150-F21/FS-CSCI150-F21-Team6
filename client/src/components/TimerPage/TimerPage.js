@@ -19,7 +19,7 @@ import ItemShop from '../TimerPage/Menu/ItemShop'
 function TimerPage() {
     const profile = JSON.parse(localStorage.getItem('profile'))
     const userId = profile.result._id
-    const [ pomodoro , setPomodoro ] = useState(25)
+    const [ pomodoro , setPomodoro ] = useState(.1)
     const [ shortBreak , setShortBreak ] = useState(5)
     const [ longBreak , setLongBreak ] = useState(20)
     const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoro))
@@ -85,7 +85,6 @@ function TimerPage() {
 
     const timeoutID = 0;
 
-
     useEffect(() => {
         axios.get(`http://localhost:5000/api/v1/users/character?userId=${userId}`)
             .then(
@@ -149,7 +148,7 @@ function TimerPage() {
                   <Stack direction={'row'}>
                           <TimerAdjust pomodoro={pomodoro} setPomodoro={setPomodoro} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} setTimerSeconds={setTimerSeconds} />
                           <FriendsList/>
-                          <ItemShop/>
+                          <ItemShop character={character} setCharacter={setCharacter} />
                   </Stack>
               </Box>
           </Box>

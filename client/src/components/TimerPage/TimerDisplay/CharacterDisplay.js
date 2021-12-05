@@ -14,19 +14,8 @@ const NameDisplay = ({name, character, setCharacter}) => {
     const userId = profile.result._id
     const [newName, setNewName] = useState("")
 
-    // const handleQuestChange = (event) => {
-    //     setNewQuest(event.target.value)
-    // }
-
     const handleNameChange = (event) => {
         setNewName(event.target.value)
-    }
-
-
-    const onKeyPress = (event) => {
-        if (event.keyCode === '13') {
-            console.log('enter key was pressed');
-        }
     }
 
     const handleSubmit = (e) => {
@@ -62,7 +51,6 @@ const NameDisplay = ({name, character, setCharacter}) => {
 
 
 const CharacterDisplay = ({character, setCharacter}) => {
-    console.log(character)
     return (
             <Card sx={{width: 150, mb: 2}}>
                 <CardContent sx={{display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center"}}>
