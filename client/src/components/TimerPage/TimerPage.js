@@ -27,7 +27,7 @@ function TimerPage() {
     const [ isRunning, setIsRunning ] = useState(false)
     const [ pomosCompleted, setPomosCompleted ] = useState(0);
     const [ activeTask, setActiveTask ] = useState('')
-    const [ character, setCharacterState ] = useState({char_name: "", stats: {}, inventory: []})
+    const [ character, setCharacter ] = useState({char_name: "", stats: {}, inventory: []})
     // Can probably refactor this into a smaller component, but for now it is easier to see how everything working
     // Gold: Plus 20 gold per each finished study timer,
     // plus 100 per each long break achieved
@@ -57,7 +57,7 @@ function TimerPage() {
         }
 
         console.log(updatedXp)
-        setCharacterState({...character, stats: {...character.stats, gold: updatedGold, current_xp: updatedXp, level: updatedLevel, xp_to_next_level: updatedReqExp}})
+        setCharacter({...character, stats: {...character.stats, gold: updatedGold, current_xp: updatedXp, level: updatedLevel, xp_to_next_level: updatedReqExp}})
         // error when trying to post a 0 to updatedXP stat
         axios.put(`http://localhost:5000/api/v1/users/character`, updatedCharacter)
             .then(r => console.log(r))
@@ -90,7 +90,7 @@ function TimerPage() {
         axios.get(`http://localhost:5000/api/v1/users/character?userId=${userId}`)
             .then(
                 response => {
-                    setCharacterState(response.data)
+                    setCharacter(response.data)
                 }
             )
             .catch(error => {
@@ -145,7 +145,7 @@ function TimerPage() {
               </Box>
 
               <Box sx={{ml: 10, width: '9%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <CharacterDisplay character={character}/>
+                  <CharacterDisplay character={character} setCharacter={setCharacter}/>
                   <Stack direction={'row'}>
                           <TimerAdjust pomodoro={pomodoro} setPomodoro={setPomodoro} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} setTimerSeconds={setTimerSeconds} />
                           <FriendsList/>
