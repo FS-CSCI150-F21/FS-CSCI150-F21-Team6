@@ -41,22 +41,22 @@ export default class CharacterDAO {
                 if(characterInfo.char_name) {
                     tempChar.char_name = characterInfo.char_name
                 }
-                if(characterInfo.level) {
+                if(characterInfo.level + 1) {
                     tempChar.stats.level = characterInfo.level
                 }
-                if(characterInfo.current_xp) {
+                if(characterInfo.current_xp + 1) {
                     tempChar.stats.current_xp = characterInfo.current_xp
                 }
-                if(characterInfo.xp_to_next_level) {
+                if(characterInfo.xp_to_next_level + 1) {
                     tempChar.stats.xp_to_next_level = characterInfo.xp_to_next_level
                 }
-                if(characterInfo.max_hp) {
+                if(characterInfo.max_hp + 1) {
                     tempChar.stats.max_hp = characterInfo.max_hp
                 }
-                if(characterInfo.current_hp) {
+                if(characterInfo.current_hp + 1) {
                     tempChar.stats.current_hp = characterInfo.current_hp
                 }
-                if(characterInfo.gold) {
+                if(characterInfo.gold + 1) {
                     tempChar.stats.gold = characterInfo.gold
                 }
                 let response = await users.updateOne(
