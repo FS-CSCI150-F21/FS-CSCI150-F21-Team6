@@ -34,9 +34,6 @@ const AddFriend = ({friends, setFriends, numFriends, setNumFriends}) => {
                 })
                 .catch(e => console.log(e.response))
         }
-        else {
-            console.log(e.keyCode)
-        }
     }
 
     return (
@@ -123,8 +120,6 @@ const FriendsList = () => {
                 setLoading(false);
             })
     }, [])
-    console.log(friends)
-    console.log(numFriends)
     return(
         <Box>
             <IconButton onClick={handleClickOpen}>

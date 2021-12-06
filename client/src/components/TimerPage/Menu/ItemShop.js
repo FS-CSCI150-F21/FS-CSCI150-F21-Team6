@@ -71,7 +71,7 @@ const ItemShop = ({character, setCharacter}) => {
 
             console.log(addedItem)
             // the api should probably be returning the new character for easier and more readable code
-            setCharacter({...character, stats: {...character.stats, gold: character.stats.gold - item.cost}})
+            setCharacter({...character, stats: {...character.stats, gold: character.stats.gold - item.cost}, inventory: character.inventory.concat(item)})
             axios.put(`http://localhost:5000/api/v1/users/character`, updatedGold).catch(err => console.log(err))
             axios.post("http://localhost:5000/api/v1/users/inventory", addedItem).catch(err => console.log(err))
         }
