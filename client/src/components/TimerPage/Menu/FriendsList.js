@@ -60,7 +60,7 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends,setNum
                 <ClickAwayListener onClickAway={handleClose}>
                     <Box sx={{p: 10}}>
                    <h1>Add Friend</h1>
-                    <div className="container">
+    <div className="container">
       <div className="row d-flex flex-column">
       <AddFriend setFriends={setFriends} friends={friends} numFriends={numFriends} setNumFriends={setNumFriends} />
         <div className="col-md-10 mx-auto my-4">
@@ -91,10 +91,9 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends,setNum
         </div>
       </div>
     </div>
-                    </Box>
-
-                </ClickAwayListener>
-            </Dialog>
+    </Box>
+   </ClickAwayListener>
+</Dialog>
         )
     }
 }
