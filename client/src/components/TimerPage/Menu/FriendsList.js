@@ -7,6 +7,8 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import axios from "axios";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography"
 
@@ -38,16 +40,16 @@ const AddFriend = ({friends, setFriends, numFriends, setNumFriends}) => {
     }
 
     return (
-        <TextField value={userName} onChange={handleChange} onKeyDown={handleSubmit} />
+        <TextField placeholder="Enter Friend" value={userName} onChange={handleChange} onKeyDown={handleSubmit} />
     )
 }
 
-const FriendsModal = ({open, handleClose, friends, numFriends, setFriends, setNumFriends, isLoading}) => {
+const FriendsModal = ({open, handleClose, friends, numFriends, setFriends,setNumFriends, isLoading,deleteFriend,}) => {
     if (isLoading) {
         return (
             <Dialog open={open}>
                 <ClickAwayListener onClickAway={handleClose}>
-                    <Box sx={{p: 5}}>
+                    <Box sx={{p: 50}}>
                     </Box>
                 </ClickAwayListener>
             </Dialog>
@@ -56,12 +58,39 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends, setNu
         return (
             <Dialog open={open}>
                 <ClickAwayListener onClickAway={handleClose}>
-                    <Box sx={{p: 5}}>
-                        <Typography>You have {numFriends} friends added</Typography>
-                        <List>
-                            {(numFriends > 0) && friends.map(friend => <ListItem>Name: {friend.user_name} Level: {friend.character.stats.level}</ListItem>)}
-                        </List>
-                        <AddFriend setFriends={setFriends} friends={friends} numFriends={numFriends} setNumFriends={setNumFriends} />
+                    <Box sx={{p: 10}}>
+                   <h1>Add Friend</h1>
+                    <div className="container">
+      <div className="row d-flex flex-column">
+      <AddFriend setFriends={setFriends} friends={friends} numFriends={numFriends} setNumFriends={setNumFriends} />
+        <div className="col-md-10 mx-auto my-4">
+          <table className="table table-hover">
+            <thead className="table-header bg-dark text-white">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              {numFriends > 0 ? (
+                friends.map((friend, id) => (
+                  <tr key={id}>
+                    <td>{id + 1}</td>
+                    <td>{friend.user_name}</td>
+                    <td>{friend.character.stats.level}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <th>Your Friends List</th>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
                     </Box>
 
                 </ClickAwayListener>
@@ -69,6 +98,7 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends, setNu
         )
     }
 }
+
 
 const FriendsList = () => {
     const [open, setOpen] = useState(false);
@@ -106,4 +136,4 @@ const FriendsList = () => {
     )
 }
 
-export default FriendsList
+export default FriendsList;
