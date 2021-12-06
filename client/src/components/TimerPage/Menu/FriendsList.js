@@ -58,7 +58,9 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends, setNu
                 <ClickAwayListener onClickAway={handleClose}>
                     <Box sx={{p: 5}}>
                         <Typography>You have {numFriends} friends added</Typography>
-                        {(numFriends > 0) && friends.map(friend => <ListItem>{friend.user_name}</ListItem>)}
+                        <List>
+                            {(numFriends > 0) && friends.map(friend => <ListItem>{friend.user_name}</ListItem>)}
+                        </List>
                         <AddFriend setFriends={setFriends} friends={friends} numFriends={numFriends} setNumFriends={setNumFriends} />
                     </Box>
 
