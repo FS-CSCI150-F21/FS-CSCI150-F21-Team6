@@ -59,7 +59,7 @@ const FriendsModal = ({open, handleClose, friends, numFriends, setFriends, setNu
                     <Box sx={{p: 5}}>
                         <Typography>You have {numFriends} friends added</Typography>
                         <List>
-                            {(numFriends > 0) && friends.map(friend => <ListItem>{friend.user_name}</ListItem>)}
+                            {(numFriends > 0) && friends.map(friend => <ListItem>Name: {friend.user_name} Level: {friend.character.stats.level}</ListItem>)}
                         </List>
                         <AddFriend setFriends={setFriends} friends={friends} numFriends={numFriends} setNumFriends={setNumFriends} />
                     </Box>
