@@ -19,7 +19,7 @@ import ItemShop from '../TimerPage/Menu/ItemShop'
 function TimerPage() {
     const profile = JSON.parse(localStorage.getItem('profile'))
     const userId = profile.result._id
-    const [ pomodoro , setPomodoro ] = useState(.1)
+    const [ pomodoro , setPomodoro ] = useState(25)
     const [ shortBreak , setShortBreak ] = useState(5)
     const [ longBreak , setLongBreak ] = useState(20)
     const [ timerSeconds , setTimerSeconds ] = useState(TimeMath.convMinSec(pomodoro))

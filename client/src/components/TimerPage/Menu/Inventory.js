@@ -37,7 +37,7 @@ const InventoryModal = ({open, handleClose, inventory, isLoading}) => {
             <Dialog open={open}>
                 <ClickAwayListener onClickAway={handleClose}>
                     <Box sx={{p: 5}}>
-                        {inventory.length === 0 ? "You have no items" : inventory.items.map(item => <InventoryItem itemName={item.name} itemType={item.type} />)}
+                        {inventory.length === undefined || inventory.length === 0 ? "You have no items" : inventory.items.map(item => <InventoryItem itemName={item.name} itemType={item.type} />)}
                     </Box>
                 </ClickAwayListener>
             </Dialog>

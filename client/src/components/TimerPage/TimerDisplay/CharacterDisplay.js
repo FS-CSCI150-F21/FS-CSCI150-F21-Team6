@@ -28,9 +28,7 @@ const NameDisplay = ({name, character, setCharacter}) => {
             axios.put(`http://localhost:5000/api/v1/users/character`, newNameObj)
                 .catch(e => console.log(e.response))
         }
-        else {
-            console.log(e.keyCode)
-        }
+
     }
 
 
