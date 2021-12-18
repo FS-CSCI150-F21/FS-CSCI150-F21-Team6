@@ -4,9 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import AddPost from "./components/AddContact";
 import EditContact from "./components/EditContact";
-//import Friends from "./components/Friends";
 import Friends from "./components/Friends/Friends";
-//import "./styles.css";
 
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Friends/Friends';

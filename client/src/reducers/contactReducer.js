@@ -1,6 +1,5 @@
 const initialState = [
-  // { id: 0, name: "Raman Sharma", Level:  " 20", Progress: "Master" },
-  // { id: 1, name: "Test Name", Level:  " 25", Progress: "Master" },
+//Verify friend list is working
 ];
 
 export const contactReducer = (state = initialState , action) => {

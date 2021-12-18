@@ -13,7 +13,6 @@ import store from "./store";
 
 import "react-toastify/dist/ReactToastify.css";
 import { composeWithDevTools } from "redux-devtools-extension";
-//import { contactReducer } from "./reducers/contactReducer";
 
 ReactDOM.render(
   <Provider store={store}>
